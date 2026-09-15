@@ -16,7 +16,7 @@
         <!-- --------------- HEADER --------------- -->
         <nav id="header">
             <div class="nav-logo">
-                <p class="nav-name">Yimen</p>
+                <p class="nav-name">Profile</p>
                 <span>.</span>
             </div>
             <div class="nav-menu" id="myNavMenu">
@@ -77,8 +77,12 @@
                     </div>
                 </div>
                 <div class="featured-image">
-                    <div class="image">
-                        <img src="./profile.png" alt="Profile Avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=Portfolio'">
+                    <div class="image" style="position: relative;">
+                        <img id="profileImgDisplay" src="./profile.png" alt="Profile Avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=Portfolio'">
+                        <div class="profile-upload-overlay" id="changeProfileBtn" title="Change Profile Photo" style="position: absolute; bottom: 10px; right: 10px; background: var(--first-color); color: white; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 3px solid var(--card-bg); box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+                            <i class="uil uil-camera" style="font-size: 20px;"></i>
+                        </div>
+                        <input type="file" id="profileImgInput" accept="image/*" hidden>
                     </div>
                 </div>
                 <div class="scroll-icon-box">
@@ -342,6 +346,60 @@
 
         <!-- --------------- FOOTER --------------- -->
         <footer>
+            <!-- Live Analytics & Engagement Widget -->
+            <div class="footer-analytics" style="background: var(--body-color); border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 15px var(--first-shadow-color);">
+                <h3 style="font-size: 18px; margin-bottom: 15px; color: var(--first-color); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i class="uil uil-chart-grow"></i> Live Visitor Analytics & Engagement
+                </h3>
+
+                <!-- Stats Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div style="background: var(--card-bg); padding: 12px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <i class="uil uil-eye" style="font-size: 22px; color: #3b82f6;"></i>
+                        <h4 id="todayVisitorsCount" style="font-size: 20px; font-weight: 700; margin-top: 4px;">1</h4>
+                        <span style="font-size: 12px; color: var(--text-color-second);">ተጎብኝዎች (Today)</span>
+                    </div>
+                    <div style="background: var(--card-bg); padding: 12px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <i class="uil uil-thumbs-up" style="font-size: 22px; color: #10b981;"></i>
+                        <h4 id="likesCount" style="font-size: 20px; font-weight: 700; margin-top: 4px;">0</h4>
+                        <span style="font-size: 12px; color: var(--text-color-second);">መውደዶች (Likes)</span>
+                    </div>
+                    <div style="background: var(--card-bg); padding: 12px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <i class="uil uil-thumbs-down" style="font-size: 22px; color: #ef4444;"></i>
+                        <h4 id="dislikesCount" style="font-size: 20px; font-weight: 700; margin-top: 4px;">0</h4>
+                        <span style="font-size: 12px; color: var(--text-color-second);">ያልወደዱት (Dislikes)</span>
+                    </div>
+                    <div style="background: var(--card-bg); padding: 12px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <i class="uil uil-comment-alt-notes" style="font-size: 22px; color: #8b5cf6;"></i>
+                        <h4 id="commentsCount" style="font-size: 20px; font-weight: 700; margin-top: 4px;">0</h4>
+                        <span style="font-size: 12px; color: var(--text-color-second);">ኮሜንቶች (Comments)</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Like / Dislike / Star Rating Buttons -->
+                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 15px;">
+                    <button id="likeBtn" class="btn" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981;">
+                        <i class="uil uil-thumbs-up"></i> Like (<span id="likeBtnNum">0</span>)
+                    </button>
+                    <button id="dislikeBtn" class="btn" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444;">
+                        <i class="uil uil-thumbs-down"></i> Dislike (<span id="dislikeBtnNum">0</span>)
+                    </button>
+
+                    <!-- Star Rating -->
+                    <div style="display: flex; align-items: center; gap: 5px; background: var(--card-bg); padding: 8px 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <span style="font-size: 13px; font-weight: 600; margin-right: 5px;">Rate Portfolio:</span>
+                        <div id="starRatingContainer" style="display: flex; gap: 4px; font-size: 20px; color: #f59e0b; cursor: pointer;">
+                            <i class="uil uil-star" data-rating="1"></i>
+                            <i class="uil uil-star" data-rating="2"></i>
+                            <i class="uil uil-star" data-rating="3"></i>
+                            <i class="uil uil-star" data-rating="4"></i>
+                            <i class="uil uil-star" data-rating="5"></i>
+                        </div>
+                        <span id="ratingScoreText" style="font-size: 12px; margin-left: 5px; color: var(--text-color-second);">(5.0 ⭐)</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="top-footer">
                 <p>Yimen Anmaw .</p>
             </div>

@@ -323,17 +323,87 @@ window.deleteFile = function (id) {
     }
 };
 
-// Download CV Buttons
+// Profile Photo Upload Handler
+const profileImgDisplay = document.getElementById('profileImgDisplay');
+const profileImgInput = document.getElementById('profileImgInput');
+const changeProfileBtn = document.getElementById('changeProfileBtn');
+
+// Load saved profile photo if available
+const savedProfilePic = localStorage.getItem('user_profile_photo');
+if (savedProfilePic && profileImgDisplay) {
+    profileImgDisplay.src = savedProfilePic;
+}
+
+if (changeProfileBtn && profileImgInput) {
+    changeProfileBtn.addEventListener('click', () => profileImgInput.click());
+    profileImgInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                profileImgDisplay.src = evt.target.result;
+                localStorage.setItem('user_profile_photo', evt.target.result);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+}
+
+// Download File Function with Confirmation / Selection
+window.downloadFile = function (id) {
+    const file = filesArray.find(f => f.id === id);
+    if (!file) return;
+
+    // Confirm File Selection before downloading
+    const confirmDownload = confirm(`📥 የምርጫ ማረጋገጫ (File Selection Confirmation):\n\nለማውረድ የመረጡት ፋይል: "${file.name}"\nመጠን: ${file.size}\nምድብ: ${file.category}\n\nፋይሉን ማውረድ ይፈልጋሉ?`);
+    if (!confirmDownload) return;
+
+    if (file.dataUrl) {
+        const a = document.createElement('a');
+        a.href = file.dataUrl;
+        a.download = file.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    } else {
+        const dummyContent = `Portfolio Document - ${file.name}\n\nThank you for downloading from Yimen Anmaw Portfolio!`;
+        const blob = new Blob([dummyContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.name.endsWith('.pdf') ? file.name.replace('.pdf', '.txt') : file.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+};
+
+// Open Selection Modal for CV Downloads
 const cvButtons = ['navCvBtn', 'heroCvBtn', 'aboutCvBtn'];
 cvButtons.forEach(btnId => {
     const btn = document.getElementById(btnId);
     if (btn) {
         btn.addEventListener('click', () => {
-            const cvFile = filesArray.find(f => f.category.toLowerCase().includes('cv') || f.name.toLowerCase().includes('cv'));
-            if (cvFile) {
-                downloadFile(cvFile.id);
-            } else {
-                downloadFile(filesArray[0]?.id || '1');
+            if (filesArray.length === 0) {
+                alert("⚠️ ለመውረድ የተዘጋጀ ፋይል የለም! (No files available for download)");
+                return;
+            }
+
+            // Create a selection prompt of available files
+            let optionsList = "--- 📥 ለማውረድ የሚፈልጉትን ፋይል ይምረጡ (Select a file) ---\n\n";
+            filesArray.forEach((f, index) => {
+                optionsList += `${index + 1}. ${f.name} (${f.category})\n`;
+            });
+            optionsList += `\nእባክዎን የፋይሉን ቁጥር ያስገቡ (1 - ${filesArray.length}):`;
+
+            const selectedIndexStr = prompt(optionsList, "1");
+            if (selectedIndexStr !== null) {
+                const selectedIndex = parseInt(selectedIndexStr.trim()) - 1;
+                if (!isNaN(selectedIndex) && selectedIndex >= 0 && selectedIndex < filesArray.length) {
+                    downloadFile(filesArray[selectedIndex].id);
+                } else {
+                    alert("❌ ትክክለኛ ያልሆነ ቁጥር መርጠዋል!");
+                }
             }
         });
     }
@@ -436,19 +506,127 @@ if (contactForm) {
                 if (response.ok) {
                     alert(`✅ እናመሰግናለን ${nameVal}! መልእክትዎ ቀጥታ ወደ yimenanmaw711@gmail.com ተልኳል።`);
                     contactForm.reset();
+                    incrementCommentCount();
                 } else {
                     alert(`✅ እናመሰግናለን ${nameVal}! መልእክትዎ ተቀብለናል፤ በቅርቡ እናገኝዎታለን።`);
                     contactForm.reset();
+                    incrementCommentCount();
                 }
             }).catch(error => {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnHtml;
                 alert(`✅ መልእክትዎ ተመዝግቧል! እናመሰግናለን ${nameVal}!`);
                 contactForm.reset();
+                incrementCommentCount();
             });
         }
     });
 }
 
-// Initial Render
+/* ----- LIVE VISITOR ANALYTICS & RATING WIDGET LOGIC ----- */
+let visitorAnalytics = {
+    todayVisitors: 1,
+    likes: 5,
+    dislikes: 0,
+    comments: 0,
+    userRating: 5
+};
+
+const savedAnalytics = localStorage.getItem('portfolio_analytics_data');
+if (savedAnalytics) {
+    try {
+        visitorAnalytics = JSON.parse(savedAnalytics);
+    } catch (e) {}
+}
+
+// Track Today Visitors
+const lastVisitDate = localStorage.getItem('last_visit_date');
+const todayStr = new Date().toISOString().split('T')[0];
+if (lastVisitDate !== todayStr) {
+    visitorAnalytics.todayVisitors += 1;
+    localStorage.setItem('last_visit_date', todayStr);
+}
+
+function saveAnalytics() {
+    localStorage.setItem('portfolio_analytics_data', JSON.stringify(visitorAnalytics));
+    updateAnalyticsUI();
+}
+
+function updateAnalyticsUI() {
+    const todayVisitorsEl = document.getElementById('todayVisitorsCount');
+    const likesEl = document.getElementById('likesCount');
+    const dislikesEl = document.getElementById('dislikesCount');
+    const commentsEl = document.getElementById('commentsCount');
+    const likeBtnNum = document.getElementById('likeBtnNum');
+    const dislikeBtnNum = document.getElementById('dislikeBtnNum');
+
+    if (todayVisitorsEl) todayVisitorsEl.textContent = visitorAnalytics.todayVisitors;
+    if (likesEl) likesEl.textContent = visitorAnalytics.likes;
+    if (dislikesEl) dislikesEl.textContent = visitorAnalytics.dislikes;
+    if (commentsEl) commentsEl.textContent = visitorAnalytics.comments;
+    if (likeBtnNum) likeBtnNum.textContent = visitorAnalytics.likes;
+    if (dislikeBtnNum) dislikeBtnNum.textContent = visitorAnalytics.dislikes;
+}
+
+function incrementCommentCount() {
+    visitorAnalytics.comments += 1;
+    saveAnalytics();
+}
+
+// Like and Dislike Button Listeners
+const likeBtn = document.getElementById('likeBtn');
+const dislikeBtn = document.getElementById('dislikeBtn');
+
+if (likeBtn) {
+    likeBtn.addEventListener('click', () => {
+        visitorAnalytics.likes += 1;
+        saveAnalytics();
+        alert('❤️ እናመሰግናለን! ፖርትፎሊዮውን ወደዱት። (Liked)');
+    });
+}
+
+if (dislikeBtn) {
+    dislikeBtn.addEventListener('click', () => {
+        visitorAnalytics.dislikes += 1;
+        saveAnalytics();
+        alert('👍 አስተያየትዎ ተመዝግቧል። ለወደፊቱ ይበልጥ እናሻሽለዋለን!');
+    });
+}
+
+// Star Rating Listener
+const starRatingContainer = document.getElementById('starRatingContainer');
+const ratingScoreText = document.getElementById('ratingScoreText');
+
+if (starRatingContainer) {
+    const stars = starRatingContainer.querySelectorAll('i');
+    
+    function highlightStars(rating) {
+        stars.forEach(star => {
+            const r = parseInt(star.getAttribute('data-rating'));
+            if (r <= rating) {
+                star.className = 'uil uil-star';
+                star.style.color = '#f59e0b';
+            } else {
+                star.className = 'uil uil-star';
+                star.style.color = '#d1d5db';
+            }
+        });
+        if (ratingScoreText) ratingScoreText.textContent = `(${rating}.0 ⭐)`;
+    }
+
+    highlightStars(visitorAnalytics.userRating);
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const selectedRating = parseInt(star.getAttribute('data-rating'));
+            visitorAnalytics.userRating = selectedRating;
+            highlightStars(selectedRating);
+            saveAnalytics();
+            alert(`🌟 እናመሰግናለን! ለፖርትፎሊዮው ${selectedRating} ኮከብ (Star) ሰጡት።`);
+        });
+    });
+}
+
+// Initial UI Render
+updateAnalyticsUI();
 renderFiles();
