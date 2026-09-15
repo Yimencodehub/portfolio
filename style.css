@@ -267,7 +267,7 @@ nav{
     width: 320px;
     height: 320px;
     border-radius: 50%;
-    overflow: hidden;
+    position: relative;
     border: 6px solid var(--first-color);
     box-shadow: 0 10px 30px var(--first-shadow-color);
 }
@@ -275,6 +275,7 @@ nav{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 50%;
 }
 .scroll-icon-box{
     position: absolute;

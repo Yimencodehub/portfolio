@@ -79,10 +79,10 @@
                 <div class="featured-image">
                     <div class="image" style="position: relative;">
                         <img id="profileImgDisplay" src="./profile.png" alt="Profile Avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=Portfolio'">
-                        <div class="profile-upload-overlay" id="changeProfileBtn" title="Change Profile Photo" style="position: absolute; bottom: 10px; right: 10px; background: var(--first-color); color: white; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 3px solid var(--card-bg); box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
-                            <i class="uil uil-camera" style="font-size: 20px;"></i>
+                        <div class="profile-upload-overlay" id="changeProfileBtn" onclick="document.getElementById('profileImgInput').click();" title="Change Profile Photo" style="position: absolute; bottom: 15px; right: 15px; background: var(--first-color); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 3px solid var(--card-bg); box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 10; transition: transform 0.2s ease;">
+                            <i class="uil uil-camera" style="font-size: 22px;"></i>
                         </div>
-                        <input type="file" id="profileImgInput" accept="image/*" hidden>
+                        <input type="file" id="profileImgInput" accept="image/*" style="display: none;">
                     </div>
                 </div>
                 <div class="scroll-icon-box">
