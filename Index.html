@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Portfolio & File Hub</title>
+    <!-- UNICONS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- --------------- HEADER --------------- -->
+        <nav id="header">
+            <div class="nav-logo">
+                <p class="nav-name">Yimen</p>
+                <span>.</span>
+            </div>
+            <div class="nav-menu" id="myNavMenu">
+                <ul class="nav_menu_list">
+                    <li class="nav_list">
+                        <a href="#home" class="nav-link active-link">Home</a>
+                    </li>
+                    <li class="nav_list">
+                        <a href="#about" class="nav-link">About</a>
+                    </li>
+                    <li class="nav_list">
+                        <a href="#projects" class="nav-link">Projects</a>
+                    </li>
+                    <li class="nav_list">
+                        <a href="#files" class="nav-link">Files & CV</a>
+                    </li>
+                    <li class="nav_list">
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav-actions">
+                <div class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="uil uil-moon" id="themeIcon"></i>
+                </div>
+                <div class="nav-button">
+                    <button class="btn" id="navCvBtn"><i class="uil uil-file-download-alt"></i> CV Download</button>
+                </div>
+                <div class="nav-menu-btn">
+                    <i class="uil uil-bars" onclick="myMenuFunction()"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- -------------- MAIN ---------------- -->
+        <main class="wrapper">
+            <!-- -------------- FEATURED BOX ---------------- -->
+            <section class="featured-box" id="home">
+                <div class="featured-text">
+                    <div class="featured-text-card">
+                        <span>Hi, I'm Yimen Anmaw</span>
+                    </div>
+                    <div class="featured-name">
+                        <p>I'm <span class="typedText">Developer</span></p>
+                    </div>
+                    <div class="featured-text-info">
+                        <p>Experienced full-stack developer passionate about creating visually stunning, highly performant, and user-friendly web applications.</p>
+                    </div>
+                    <div class="featured-text-btn">
+                        <a href="#contact" class="btn blue-btn">Hire Me</a>
+                        <button class="btn" id="heroCvBtn"><i class="uil uil-file-download-alt"></i> Download CV</button>
+                    </div>
+                    <div class="social_icons">
+                        <a href="https://github.com/Yimencodehub" class="icon" target="_blank" title="GitHub (Yimencodehub)"><i class="uil uil-github-alt"></i></a>
+                        <a href="https://t.me/yimen27" class="icon" target="_blank" title="Telegram (@yimen27)"><i class="uil uil-telegram-alt"></i></a>
+                        <a href="https://tiktok.com/@yimen211" class="icon" target="_blank" title="TikTok (@yimen211)"><i class="uil uil-video"></i></a>
+                        <a href="#" class="icon" onclick="alert('Twitter link coming soon!'); return false;" title="Twitter (Coming soon)"><i class="uil uil-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="featured-image">
+                    <div class="image">
+                        <img src="./profile.png" alt="Profile Avatar" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=Portfolio'">
+                    </div>
+                </div>
+                <div class="scroll-icon-box">
+                    <a href="#about" class="scroll-btn">
+                        <i class="uil uil-mouse-alt"></i>
+                        <p>Scroll Down</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- -------------- ABOUT BOX ---------------- -->
+            <section class="section" id="about">
+                <div class="top-header">
+                    <h1>About Me</h1>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="about-info">
+                            <h3>My Introduction</h3>
+                            <p>I am well-versed in HTML, CSS, JavaScript, and modern frameworks/libraries. I have experience building full-stack web solutions with seamless backend logic, file handling, and database integration.</p>
+                            <div class="about-btn">
+                                <button class="btn" id="aboutCvBtn"><i class="uil uil-import"></i> Download CV</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="skills-box">
+                            <div class="skills-header">
+                                <h3>Frontend</h3>
+                            </div>
+                            <div class="skills-list">
+                                <span>HTML5</span>
+                                <span>CSS3</span>
+                                <span>JavaScript</span>
+                                <span>React</span>
+                                <span>Vue</span>
+                                <span>Tailwind</span>
+                            </div>
+                        </div>
+                        <div class="skills-box">
+                            <div class="skills-header">
+                                <h3>Backend</h3>
+                            </div>
+                            <div class="skills-list">
+                                <span>Node.js</span>
+                                <span>Express</span>
+                                <span>Python</span>
+                                <span>PHP</span>
+                            </div>
+                        </div>
+                        <div class="skills-box">
+                            <div class="skills-header">
+                                <h3>Database & Tools</h3>
+                            </div>
+                            <div class="skills-list">
+                                <span>MongoDB</span>
+                                <span>PostgreSQL</span>
+                                <span>Git & GitHub</span>
+                                <span>REST APIs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- -------------- PROJECTS SECTION ---------------- -->
+            <section class="section" id="projects">
+                <div class="top-header">
+                    <h1>Projects</h1>
+                    <span>Featured Works & Accomplishments</span>
+                </div>
+                <div class="project-container">
+                    <a href="https://github.com/Yimencodehub" target="_blank" class="project-card-link" style="text-decoration: none; color: inherit;">
+                        <div class="project-card">
+                            <div class="project-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="uil uil-schedule"></i>
+                                <i class="uil uil-github-alt" style="font-size: 20px; opacity: 0.7;"></i>
+                            </div>
+                            <h3>Online Class Schedule System</h3>
+                            <p>Web-based timetable and class scheduling platform for teachers and students.</p>
+                            <div class="skills-list" style="margin-top: 10px;">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>PHP</span>
+                                <span>JS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/Yimencodehub" target="_blank" class="project-card-link" style="text-decoration: none; color: inherit;">
+                        <div class="project-card">
+                            <div class="project-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="uil uil-building"></i>
+                                <i class="uil uil-github-alt" style="font-size: 20px; opacity: 0.7;"></i>
+                            </div>
+                            <h3>Hotel Management System</h3>
+                            <p>Comprehensive hotel booking, room reservation, and guest management system.</p>
+                            <div class="skills-list" style="margin-top: 10px;">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>PHP</span>
+                                <span>JS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/Yimencodehub" target="_blank" class="project-card-link" style="text-decoration: none; color: inherit;">
+                        <div class="project-card">
+                            <div class="project-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="uil uil-book-alt"></i>
+                                <i class="uil uil-github-alt" style="font-size: 20px; opacity: 0.7;"></i>
+                            </div>
+                            <h3>Library Management System</h3>
+                            <p>Complete library solution for managing books, members, issues, and returns seamlessly.</p>
+                            <div class="skills-list" style="margin-top: 10px;">
+                                <span>PHP</span>
+                                <span>JS</span>
+                                <span>HTML</span>
+                                <span>CSS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/Yimencodehub" target="_blank" class="project-card-link" style="text-decoration: none; color: inherit;">
+                        <div class="project-card">
+                            <div class="project-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="uil uil-graduation-cap"></i>
+                                <i class="uil uil-github-alt" style="font-size: 20px; opacity: 0.7;"></i>
+                            </div>
+                            <h3>Course Management System</h3>
+                            <p>Interactive web application for course registration, student tracking, and real-time database sync.</p>
+                            <div class="skills-list" style="margin-top: 10px;">
+                                <span>React</span>
+                                <span>Firebase</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/Yimencodehub" target="_blank" class="project-card-link" style="text-decoration: none; color: inherit;">
+                        <div class="project-card">
+                            <div class="project-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="uil uil-calculator-alt"></i>
+                                <i class="uil uil-github-alt" style="font-size: 20px; opacity: 0.7;"></i>
+                            </div>
+                            <h3>Calculator App</h3>
+                            <p>Modern responsive web calculator supporting basic and mathematical calculations with clean UI.</p>
+                            <div class="skills-list" style="margin-top: 10px;">
+                                <span>React</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/Yimencodehub" target="_blank" class="project-card-link" style="text-decoration: none; color: inherit;">
+                        <div class="project-card">
+                            <div class="project-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="uil uil-cloud-sun"></i>
+                                <i class="uil uil-github-alt" style="font-size: 20px; opacity: 0.7;"></i>
+                            </div>
+                            <h3>Weather App</h3>
+                            <p>Real-time weather forecast application showing temperature, humidity, and atmospheric conditions.</p>
+                            <div class="skills-list" style="margin-top: 10px;">
+                                <span>HTML</span>
+                                <span>JS</span>
+                                <span>CSS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/Yimencodehub" target="_blank" class="project-card-link" style="text-decoration: none; color: inherit;">
+                        <div class="project-card">
+                            <div class="project-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="uil uil-microphone"></i>
+                                <i class="uil uil-github-alt" style="font-size: 20px; opacity: 0.7;"></i>
+                            </div>
+                            <h3>Voice to Text Converter</h3>
+                            <p>Real-time speech recognition web application converting spoken audio into structured text.</p>
+                            <div class="skills-list" style="margin-top: 10px;">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>JS</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- -------------- FILE MANAGER SECTION (UPLOAD & DOWNLOAD) ---------------- -->
+            <section class="section" id="files">
+                <div class="top-header">
+                    <h1>File Center & CV Hub</h1>
+                    <span>Upload PDF, JPG, or PNG files (Max 5MB) or download files</span>
+                </div>
+                
+                <div class="file-manager-grid">
+                    <!-- Upload Box -->
+                    <div class="file-card upload-card">
+                        <div class="file-card-header">
+                            <i class="uil uil-cloud-upload"></i>
+                            <h3>Upload Document or Image</h3>
+                        </div>
+                        <div class="drop-zone" id="dropZone">
+                            <i class="uil uil-file-upload-alt"></i>
+                            <p>Drag & Drop files here or <span>Browse</span></p>
+                            <small style="color: var(--text-color-second); display: block; margin-top: 6px; font-weight: 500;">(PDF, JPG, PNG only — size &lt; 5MB)</small>
+                            <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" hidden multiple>
+                        </div>
+                        <small id="uploadError" style="color: #ef4444; display: none; font-size: 13px; font-weight: 600; margin-bottom: 10px;"></small>
+                        <div class="upload-controls">
+                            <input type="text" id="fileCategory" class="input-field" placeholder="Description / Category (e.g. CV, Image, Doc)">
+                            <button class="btn blue-btn" id="uploadBtn"><i class="uil uil-upload"></i> Upload File</button>
+                        </div>
+                    </div>
+
+                    <!-- File List / Download Box -->
+                    <div class="file-card list-card">
+                        <div class="file-card-header">
+                            <i class="uil uil-folder-heart"></i>
+                            <h3>Available Downloads</h3>
+                        </div>
+                        <div class="file-list" id="fileList">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- -------------- CONTACT BOX ---------------- -->
+            <section class="section" id="contact">
+                <div class="top-header">
+                    <h1>Get in touch</h1>
+                    <span>Do you have a project in mind? Contact me here</span>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="contact-info">
+                            <h2>Find Me <i class="uil uil-corner-right-down"></i></h2>
+                            <p><i class="uil uil-envelope"></i> Email: <a href="mailto:yimenanmaw711@gmail.com" style="color: var(--first-color); text-decoration: underline; font-weight: 600;">yimenanmaw711@gmail.com</a></p>
+                            <p><i class="uil uil-phone"></i> +251 92735242</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-control">
+                            <form id="contactForm" action="https://formspree.io/f/xknlqrqr" method="POST" novalidate>
+                                <div class="form-inputs" style="display: flex; flex-direction: column; gap: 15px;">
+                                    <div>
+                                        <input type="text" id="nameInput" name="name" class="input-field" placeholder="Full Name" required>
+                                        <small id="nameError" style="color: #ef4444; display: none; font-size: 12px; margin-top: 4px; font-weight: 500;"></small>
+                                    </div>
+                                    <div>
+                                        <input type="email" id="emailInput" name="email" class="input-field" placeholder="Email (must be @gmail.com)" required>
+                                        <small id="emailError" style="color: #ef4444; display: none; font-size: 12px; margin-top: 4px; font-weight: 500;"></small>
+                                    </div>
+                                </div>
+                                <div class="text-area" style="margin-top: 15px;">
+                                    <textarea id="messageInput" name="message" placeholder="Message (min 5 characters)" required></textarea>
+                                    <small id="messageError" style="color: #ef4444; display: none; font-size: 12px; margin-top: -10px; font-weight: 500;"></small>
+                                </div>
+                                <div class="form-button" style="margin-top: 15px;">
+                                    <button type="submit" class="btn">Send <i class="uil uil-message"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- --------------- FOOTER --------------- -->
+        <footer>
+            <div class="top-footer">
+                <p>Yimen Anmaw .</p>
+            </div>
+            <div class="middle-footer">
+                <ul class="footer-menu">
+                    <li class="footer_menu_list"><a href="#home">Home</a></li>
+                    <li class="footer_menu_list"><a href="#about">About</a></li>
+                    <li class="footer_menu_list"><a href="#projects">Projects</a></li>
+                    <li class="footer_menu_list"><a href="#files">Files</a></li>
+                    <li class="footer_menu_list"><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social-icons">
+                <a href="https://github.com/Yimencodehub" class="icon" target="_blank" title="GitHub (Yimencodehub)"><i class="uil uil-github-alt"></i></a>
+                <a href="https://t.me/yimen27" class="icon" target="_blank" title="Telegram (@yimen27)"><i class="uil uil-telegram-alt"></i></a>
+                <a href="https://tiktok.com/@yimen211" class="icon" target="_blank" title="TikTok (@yimen211)"><i class="uil uil-video"></i></a>
+                <a href="#" class="icon" onclick="alert('Twitter link coming soon!'); return false;" title="Twitter (Coming soon)"><i class="uil uil-twitter"></i></a>
+            </div>
+            <div class="bottom-footer">
+                <p>Copyright &copy; <a href="#home" style="text-decoration: none;">Yimen Anmaw</a> - All rights reserved</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ----- TYPING JS Link ----- -->
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <!-- ----- SCROLL REVEAL JS Link----- -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <!-- ----- MAIN JS ----- -->
+    <script src="script.js"></script>
+</body>
+</html>
