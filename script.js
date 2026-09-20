@@ -605,45 +605,46 @@ function saveComments() {
     renderComments();
 }
 
+window.openFeedbackModal = function() {
+    const modal = document.getElementById('feedbackModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        renderComments();
+    }
+};
+
+window.closeFeedbackModal = function() {
+    const modal = document.getElementById('feedbackModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+};
+
 function renderComments() {
     const container = document.getElementById('commentsListContainer');
+    const modalContainer = document.getElementById('modalCommentsList');
     const badge = document.getElementById('liveCommentsBadge');
+    const navBadge = document.getElementById('feedbackBadge');
     
     if (badge) {
         badge.textContent = `${commentsList.length} Comment${commentsList.length !== 1 ? 's' : ''}`;
     }
+    if (navBadge) {
+        navBadge.textContent = commentsList.length;
+    }
 
-    if (visitorAnalytics) {
+    if (typeof visitorAnalytics !== 'undefined' && visitorAnalytics) {
         visitorAnalytics.comments = commentsList.length;
-        updateAnalyticsUI();
+        if (typeof updateAnalyticsUI === 'function') updateAnalyticsUI();
     }
 
-    if (!container) return;
-
-    if (commentsList.length === 0) {
-        container.innerHTML = `
-            <div style="text-align: center; color: var(--text-color-second); padding: 15px; font-size: 13px;">
-                <i class="uil uil-comment-alt-slash" style="font-size: 24px;"></i>
-                <p>No comments yet. Be the first to leave a comment!</p>
-            </div>
-        `;
-        return;
-    }
-
-    container.innerHTML = '';
-    commentsList.forEach(c => {
-        const item = document.createElement('div');
-        item.className = 'comment-item';
-        item.style.cssText = `
-            background: var(--body-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px 14px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        `;
-        item.innerHTML = `
+    const htmlContent = commentsList.length === 0 ? `
+        <div style="text-align: center; color: var(--text-color-second); padding: 25px 15px; font-size: 13px;">
+            <i class="uil uil-comment-alt-slash" style="font-size: 28px;"></i>
+            <p style="margin-top: 6px;">No comments yet. Be the first to leave feedback!</p>
+        </div>
+    ` : commentsList.map(c => `
+        <div class="comment-item" style="background: var(--body-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start; text-align: left;">
             <div style="background: var(--first-color); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0;">
                 ${c.name ? c.name.charAt(0).toUpperCase() : 'U'}
             </div>
@@ -654,9 +655,11 @@ function renderComments() {
                 </div>
                 <p style="font-size: 13px; color: var(--text-color-second); line-height: 1.4; margin: 0;">${c.message}</p>
             </div>
-        `;
-        container.appendChild(item);
-    });
+        </div>
+    `).join('');
+
+    if (container) container.innerHTML = htmlContent;
+    if (modalContainer) modalContainer.innerHTML = htmlContent;
 }
 
 function addComment(name, message) {
