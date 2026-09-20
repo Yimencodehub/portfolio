@@ -245,40 +245,42 @@ uploadBtn.addEventListener('click', () => {
     }
 });
 
-// Process Uploaded Files with PDF & Size Limits
+// Process Uploaded Files (PDF, JPG, PNG, DOCX)
 function handleFiles(files) {
     const uploadError = document.getElementById('uploadError');
     if (uploadError) uploadError.style.display = 'none';
 
-    const category = fileCategoryInput.value.trim() || 'PDF Document';
-    const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB Limit
+    const category = fileCategoryInput.value.trim() || 'Document';
+    const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB Limit
 
     Array.from(files).forEach(file => {
-        // 1. Format Check: Must be PDF
-        const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
-        if (!isPdf) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        const allowedExts = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx', 'txt', 'zip'];
+        const isAllowed = allowedExts.includes(ext) || file.type.startsWith('image/') || file.type === 'application/pdf';
+
+        if (!isAllowed) {
+            const msg = `❌ አልተቀበለም! "${file.name}" የተፈቀደ ፋይል አይደለም። (PDF, JPG, PNG, DOCX ብቻ)`;
             if (uploadError) {
-                uploadError.textContent = `❌ አልተቀበለም! "${file.name}" PDF አይደለም። (እባክዎን PDF ፋይል ብቻ ይምረጡ)`;
+                uploadError.textContent = msg;
                 uploadError.style.display = 'block';
             } else {
-                alert(`❌ አልተቀበለም! "${file.name}" PDF አይደለም። (እባክዎን PDF ፋይል ብቻ ይምረጡ)`);
+                alert(msg);
             }
             return;
         }
 
-        // 2. Size Check: Must be less than 5MB
         if (file.size > MAX_SIZE_BYTES) {
             const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+            const msg = `❌ የፋይል መጠኑ ከ 10MB ይበልጣል! ("${file.name}" = ${fileSizeMB} MB)`;
             if (uploadError) {
-                uploadError.textContent = `❌ የፋይል መጠኑ ከ 5MB ይበልጣል! ("${file.name}" = ${fileSizeMB} MB)`;
+                uploadError.textContent = msg;
                 uploadError.style.display = 'block';
             } else {
-                alert(`❌ የፋይል መጠኑ ከ 5MB ይበልጣል! ("${file.name}" = ${fileSizeMB} MB)`);
+                alert(msg);
             }
             return;
         }
 
-        // Read and Save PDF
         const reader = new FileReader();
         reader.onload = function (e) {
             const newFile = {
@@ -292,6 +294,7 @@ function handleFiles(files) {
             filesArray.unshift(newFile);
             saveFiles();
             renderFiles();
+            alert(`✅ "${file.name}" በተሳካ ሁኔታ ተጫነ! (Successfully uploaded)`);
         };
         reader.readAsDataURL(file);
     });
@@ -312,23 +315,13 @@ window.downloadFile = function (id) {
         a.click();
         document.body.removeChild(a);
     } else {
-        // Fallback demo CV generator if no dataUrl
-        const dummyContent = `Portfolio Resume / CV - ${file.name}\n\nThank you for downloading!`;
-        const blob = new Blob([dummyContent], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = file.name.endsWith('.pdf') ? file.name.replace('.pdf', '.txt') : file.name;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        downloadDefaultCV();
     }
 };
 
 // Delete File Function
 window.deleteFile = function (id) {
-    if (confirm("Are you sure you want to remove this file?")) {
+    if (confirm(`የተመረጠውን ፋይል ማስወገድ ይፈልጋሉ?`)) {
         filesArray = filesArray.filter(f => f.id !== id);
         saveFiles();
         renderFiles();
@@ -353,69 +346,75 @@ if (changeProfileBtn && profileImgInput) {
             const reader = new FileReader();
             reader.onload = function(evt) {
                 profileImgDisplay.src = evt.target.result;
-                localStorage.setItem('user_profile_photo', evt.target.result);
+                try {
+                    localStorage.setItem('user_profile_photo', evt.target.result);
+                } catch(err) {}
             };
             reader.readAsDataURL(e.target.files[0]);
         }
     });
 }
 
-// Download File Function with Confirmation / Selection
-window.downloadFile = function (id) {
-    const file = filesArray.find(f => f.id === id);
-    if (!file) return;
+// Download Default CV Function
+function downloadDefaultCV() {
+    const cvText = `=====================================================
+                 YIMEN ANMAW - FULL STACK DEVELOPER
+=====================================================
+Email: yimenanmaw711@gmail.com
+Phone: +251 92735242
+Telegram: @yimen27
+GitHub: https://github.com/Yimencodehub
 
-    // Confirm File Selection before downloading
-    const confirmDownload = confirm(`📥 የምርጫ ማረጋገጫ (File Selection Confirmation):\n\nለማውረድ የመረጡት ፋይል: "${file.name}"\nመጠን: ${file.size}\nምድብ: ${file.category}\n\nፋይሉን ማውረድ ይፈልጋሉ?`);
-    if (!confirmDownload) return;
+ABOUT ME:
+Experienced full-stack developer passionate about creating 
+visually stunning, highly performant, and user-friendly 
+web applications.
 
-    if (file.dataUrl) {
-        const a = document.createElement('a');
-        a.href = file.dataUrl;
-        a.download = file.name;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    } else {
-        const dummyContent = `Portfolio Document - ${file.name}\n\nThank you for downloading from Yimen Anmaw Portfolio!`;
-        const blob = new Blob([dummyContent], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = file.name.endsWith('.pdf') ? file.name.replace('.pdf', '.txt') : file.name;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
-};
+TECHNICAL SKILLS:
+- Languages & Frameworks: HTML5, CSS3, JavaScript (ES6+), React, PHP
+- Tools: Git, GitHub, Vercel, Firebase, MySQL
+- Specializations: Responsive Design, Full-Stack Web Architecture
 
-// Open Selection Modal for CV Downloads
+FEATURED PROJECTS:
+1. Hotel Management System (PHP, MySQL, JS, HTML/CSS)
+2. Library Management System (PHP, JS, HTML/CSS)
+3. Course Management System (React, Firebase)
+4. Calculator & Weather Web Applications
+5. Voice to Text Converter
+
+=====================================================
+Portfolio CV - Yimen Anmaw
+=====================================================`;
+
+    const blob = new Blob([cvText], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Yimen_Anmaw_CV.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// CV Download Button Event Handlers
 const cvButtons = ['navCvBtn', 'heroCvBtn', 'aboutCvBtn'];
 cvButtons.forEach(btnId => {
     const btn = document.getElementById(btnId);
     if (btn) {
         btn.addEventListener('click', () => {
-            if (filesArray.length === 0) {
-                alert("⚠️ ለመውረድ የተዘጋጀ ፋይል የለም! (No files available for download)");
-                return;
-            }
+            const cvFile = filesArray.find(f => 
+                f.name.toLowerCase().includes('cv') || 
+                f.name.toLowerCase().includes('resume') || 
+                (f.category && f.category.toLowerCase().includes('cv'))
+            );
 
-            // Create a selection prompt of available files
-            let optionsList = "--- 📥 ለማውረድ የሚፈልጉትን ፋይል ይምረጡ (Select a file) ---\n\n";
-            filesArray.forEach((f, index) => {
-                optionsList += `${index + 1}. ${f.name} (${f.category})\n`;
-            });
-            optionsList += `\nእባክዎን የፋይሉን ቁጥር ያስገቡ (1 - ${filesArray.length}):`;
-
-            const selectedIndexStr = prompt(optionsList, "1");
-            if (selectedIndexStr !== null) {
-                const selectedIndex = parseInt(selectedIndexStr.trim()) - 1;
-                if (!isNaN(selectedIndex) && selectedIndex >= 0 && selectedIndex < filesArray.length) {
-                    downloadFile(filesArray[selectedIndex].id);
-                } else {
-                    alert("❌ ትክክለኛ ያልሆነ ቁጥር መርጠዋል!");
-                }
+            if (cvFile) {
+                downloadFile(cvFile.id);
+            } else if (filesArray.length > 0) {
+                downloadFile(filesArray[0].id);
+            } else {
+                downloadDefaultCV();
             }
         });
     }
