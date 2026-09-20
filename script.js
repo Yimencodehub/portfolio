@@ -674,32 +674,3 @@ if (starRatingContainer) {
 // Initial UI Render
 updateAnalyticsUI();
 renderFiles();
-
-/* ----- PROFILE PHOTO PERSISTENCE & UPLOAD ----- */
-const profileImgDisplay = document.getElementById('profileImgDisplay');
-const profileImgInput = document.getElementById('profileImgInput');
-
-// Load saved profile photo from localStorage if present
-const savedProfilePic = localStorage.getItem('user_profile_photo');
-if (savedProfilePic && profileImgDisplay) {
-    profileImgDisplay.src = savedProfilePic;
-}
-
-if (profileImgInput && profileImgDisplay) {
-    profileImgInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const base64Img = event.target.result;
-                profileImgDisplay.src = base64Img;
-                try {
-                    localStorage.setItem('user_profile_photo', base64Img);
-                } catch (err) {
-                    console.warn('Image too large to store in localStorage:', err);
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-}
