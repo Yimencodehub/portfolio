@@ -220,12 +220,19 @@ function renderFiles() {
         const item = document.createElement('div');
         item.className = 'file-item';
 
-        // Choose Icon based on type
+        // Choose Icon based on file extension
         let iconClass = 'uil uil-file';
-        if (file.name.endsWith('.pdf')) iconClass = 'uil uil-file-pdf-land';
-        else if (file.name.match(/\.(jpg|jpeg|png|gif|svg)$/i)) iconClass = 'uil uil-image';
-        else if (file.name.match(/\.(zip|rar|tar)$/i)) iconClass = 'uil uil-file-archive-alt';
-        else if (file.name.match(/\.(doc|docx)$/i)) iconClass = 'uil uil-file-alt';
+        const ext = file.name.split('.').pop().toLowerCase();
+        if (['pdf'].includes(ext))                          iconClass = 'uil uil-file-pdf-land';
+        else if (['jpg','jpeg','png','gif','svg','webp','bmp'].includes(ext)) iconClass = 'uil uil-image';
+        else if (['mp4','mkv','avi','mov','webm'].includes(ext))              iconClass = 'uil uil-video';
+        else if (['mp3','wav','aac','ogg','flac'].includes(ext))              iconClass = 'uil uil-music';
+        else if (['zip','rar','tar','gz','7z'].includes(ext))                 iconClass = 'uil uil-file-archive-alt';
+        else if (['doc','docx','odt'].includes(ext))                          iconClass = 'uil uil-file-alt';
+        else if (['xls','xlsx','csv'].includes(ext))                          iconClass = 'uil uil-table';
+        else if (['ppt','pptx'].includes(ext))                                iconClass = 'uil uil-presentation';
+        else if (['js','ts','py','java','c','cpp','html','css','json'].includes(ext)) iconClass = 'uil uil-brackets-curly';
+        else if (['txt','md'].includes(ext))                                  iconClass = 'uil uil-document-layout-left';
 
         item.innerHTML = `
             <div class="file-info">
@@ -277,48 +284,22 @@ uploadBtn.addEventListener('click', () => {
     }
 });
 
-// Process Uploaded Files (PDF, JPG, PNG, DOCX)
+// Process Uploaded Files — any type, any size
 function handleFiles(files) {
     const uploadError = document.getElementById('uploadError');
     if (uploadError) uploadError.style.display = 'none';
 
     const category = fileCategoryInput.value.trim() || 'Document';
-    const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB Limit
 
     Array.from(files).forEach(file => {
-        const ext = file.name.split('.').pop().toLowerCase();
-        const allowedExts = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx', 'txt', 'zip'];
-        const isAllowed = allowedExts.includes(ext) || file.type.startsWith('image/') || file.type === 'application/pdf';
-
-        if (!isAllowed) {
-            const msg = `❌ አልተቀበለም! "${file.name}" የተፈቀደ ፋይል አይደለም። (PDF, JPG, PNG, DOCX ብቻ)`;
-            if (uploadError) {
-                uploadError.textContent = msg;
-                uploadError.style.display = 'block';
-            } else {
-                alert(msg);
-            }
-            return;
-        }
-
-        if (file.size > MAX_SIZE_BYTES) {
-            const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-            const msg = `❌ የፋይል መጠኑ ከ 10MB ይበልጣል! ("${file.name}" = ${fileSizeMB} MB)`;
-            if (uploadError) {
-                uploadError.textContent = msg;
-                uploadError.style.display = 'block';
-            } else {
-                alert(msg);
-            }
-            return;
-        }
-
         const reader = new FileReader();
         reader.onload = function (e) {
             const newFile = {
                 id: Date.now().toString() + Math.random().toString(36).substr(2, 4),
                 name: file.name,
-                size: (file.size / (1024 * 1024)).toFixed(2) + ' MB',
+                size: file.size < 1024 * 1024
+                    ? (file.size / 1024).toFixed(1) + ' KB'
+                    : (file.size / (1024 * 1024)).toFixed(2) + ' MB',
                 category: category,
                 date: new Date().toISOString().split('T')[0],
                 dataUrl: e.target.result
