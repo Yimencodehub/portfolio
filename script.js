@@ -12,6 +12,7 @@ function myMenuFunction(){
 function toggleTheme() {
     const isDark = document.body.classList.toggle("dark-theme");
     document.documentElement.classList.toggle("dark-theme", isDark);
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
     
     const themeBtn = document.getElementById("themeToggle");
     if (themeBtn) {
@@ -34,6 +35,7 @@ window.toggleTheme = toggleTheme;
         if (savedTheme === "dark") {
             document.body.classList.add("dark-theme");
             document.documentElement.classList.add("dark-theme");
+            document.documentElement.setAttribute("data-theme", "dark");
             const themeBtn = document.getElementById("themeToggle");
             if (themeBtn) {
                 themeBtn.innerHTML = '<i class="uil uil-sun" id="themeIcon" style="color: #f59e0b;"></i>';

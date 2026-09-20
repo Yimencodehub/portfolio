@@ -15,15 +15,12 @@
         function toggleTheme() {
             var isDark = document.body.classList.toggle("dark-theme");
             document.documentElement.classList.toggle("dark-theme", isDark);
-            var icon = document.getElementById("themeIcon");
-            if (icon) {
-                if (isDark) {
-                    icon.classList.remove("uil-moon");
-                    icon.classList.add("uil-sun");
-                } else {
-                    icon.classList.remove("uil-sun");
-                    icon.classList.add("uil-moon");
-                }
+            document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+            var btn = document.getElementById("themeToggle");
+            if (btn) {
+                btn.innerHTML = isDark 
+                    ? '<i class="uil uil-sun" id="themeIcon" style="color: #f59e0b;"></i>' 
+                    : '<i class="uil uil-moon" id="themeIcon"></i>';
             }
             try {
                 localStorage.setItem("theme", isDark ? "dark" : "light");
@@ -33,12 +30,12 @@
             try {
                 if (localStorage.getItem("theme") === "dark") {
                     document.documentElement.classList.add("dark-theme");
+                    document.documentElement.setAttribute("data-theme", "dark");
                     window.addEventListener("DOMContentLoaded", function() {
                         document.body.classList.add("dark-theme");
-                        var icon = document.getElementById("themeIcon");
-                        if (icon) {
-                            icon.classList.remove("uil-moon");
-                            icon.classList.add("uil-sun");
+                        var btn = document.getElementById("themeToggle");
+                        if (btn) {
+                            btn.innerHTML = '<i class="uil uil-sun" id="themeIcon" style="color: #f59e0b;"></i>';
                         }
                     });
                 }

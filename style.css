@@ -17,55 +17,89 @@
     --first-shadow-color: rgba(0, 0, 0, 0.08);
 }
 
-/* Dark Theme Variables */
-html.dark-theme, body.dark-theme {
-    --body-color: #0f172a;
-    --card-bg: #1e293b;
-    --text-color: #f8fafc;
-    --text-color-second: #94a3b8;
-    --text-color-third: #34d399;
-    --border-color: #334155;
-    --first-shadow-color: rgba(0, 0, 0, 0.5);
+/* Dark Theme Variables & Complete Overrides */
+:root[data-theme="dark"],
+html.dark-theme,
+body.dark-theme {
+    --body-color: #0f172a !important;
+    --card-bg: #1e293b !important;
+    --text-color: #f8fafc !important;
+    --text-color-second: #94a3b8 !important;
+    --text-color-third: #34d399 !important;
+    --border-color: #334155 !important;
+    --first-shadow-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Dark Theme Overrides & Smooth Transitions */
-html, body, nav, .btn, .file-card, .about-info, .skills-box, .project-card, .form-control, .input-field, textarea, footer, .theme-toggle, .social_icons .icon, .drop-zone, .file-item {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-html.dark-theme, body.dark-theme {
+/* Dark Theme Explicit Component Styling */
+[data-theme="dark"] body, body.dark-theme {
     background-color: #0f172a !important;
     color: #f8fafc !important;
 }
 
-html.dark-theme nav, body.dark-theme nav {
-    background: #0f172a !important;
+[data-theme="dark"] nav, body.dark-theme nav {
+    background-color: #0f172a !important;
 }
 
-html.dark-theme .nav-link, body.dark-theme .nav-link {
+[data-theme="dark"] .project-card,
+[data-theme="dark"] .about-info,
+[data-theme="dark"] .skills-box,
+[data-theme="dark"] .file-card,
+[data-theme="dark"] .form-control,
+[data-theme="dark"] footer,
+[data-theme="dark"] .comment-item,
+body.dark-theme .project-card,
+body.dark-theme .about-info,
+body.dark-theme .skills-box,
+body.dark-theme .file-card,
+body.dark-theme .form-control,
+body.dark-theme footer,
+body.dark-theme .comment-item {
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] .input-field,
+[data-theme="dark"] textarea,
+body.dark-theme .input-field,
+body.dark-theme textarea {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] small,
+body.dark-theme p,
+body.dark-theme span,
+body.dark-theme small {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6 {
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .nav-link, body.dark-theme .nav-link {
     color: #cbd5e1;
 }
 
-html.dark-theme .nav-link:hover, body.dark-theme .nav-link:hover,
-html.dark-theme .active-link, body.dark-theme .active-link {
-    color: #818cf8;
-    background: rgba(129, 140, 248, 0.15);
-}
-
-html.dark-theme .theme-toggle, body.dark-theme .theme-toggle {
-    background: #1e293b;
-    color: #f59e0b;
-    border-color: #334155;
-}
-
-/* Force Sun icon in Dark Mode and Moon icon in Light Mode */
-html.dark-theme #themeIcon::before,
-body.dark-theme #themeIcon::before {
-    content: "\ea1a" !important; /* Sun icon in Unicons */
-}
-
-html.dark-theme .drop-zone, body.dark-theme .drop-zone {
-    background: rgba(129, 140, 248, 0.05);
+[data-theme="dark"] .theme-toggle, body.dark-theme .theme-toggle {
+    background-color: #1e293b !important;
+    color: #f59e0b !important;
+    border-color: #334155 !important;
 }
 
 /* ----- BASE ----- */
