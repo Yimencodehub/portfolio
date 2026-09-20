@@ -55,15 +55,47 @@ window.addEventListener('scroll', () => {
     }
 });
 
-/* ----- TYPING EFFECT ----- */
+/* ----- TYPING EFFECT (WITH PURE JS FALLBACK) ----- */
+const typeWords = ["Developer", "Full-Stack Engineer", "Designer", "Problem Solver"];
+const typedTextSpan = document.querySelector(".typedText");
+
 if (typeof Typed !== 'undefined') {
     new Typed(".typedText", {
-        strings: ["Developer", "Designer", "Full-Stack Engineer", "Problem Solver"],
+        strings: typeWords,
         loop: true,
         typeSpeed: 100,
-        backSpeed: 80,
+        backSpeed: 60,
         backDelay: 2000
     });
+} else if (typedTextSpan) {
+    let wordIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+
+    function runTypeWriter() {
+        const currentWord = typeWords[wordIdx];
+        if (isDeleting) {
+            typedTextSpan.textContent = currentWord.substring(0, charIdx - 1);
+            charIdx--;
+        } else {
+            typedTextSpan.textContent = currentWord.substring(0, charIdx + 1);
+            charIdx++;
+        }
+
+        let speed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIdx === currentWord.length) {
+            speed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIdx === 0) {
+            isDeleting = false;
+            wordIdx = (wordIdx + 1) % typeWords.length;
+            speed = 300;
+        }
+
+        setTimeout(runTypeWriter, speed);
+    }
+    runTypeWriter();
 }
 
 /* ----- SCROLL REVEAL ANIMATIONS ----- */
@@ -447,10 +479,11 @@ if (contactForm) {
     function validateEmail(email) {
         const lowerEmail = email.trim().toLowerCase();
         if (!lowerEmail) {
-            return '❌ ኢሜይል ማስገባት ግዴታ ነው!';
+            return '❌ እባክዎን ኢሜይልዎን ያስገቡ!';
         }
-        if (!lowerEmail.endsWith('@gmail.com')) {
-            return '❌ ኢሜይል ከ @gmail.com ውጭ አይቀበልም! (Must end with @gmail.com)';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(lowerEmail)) {
+            return '❌ እባክዎን ትክክለኛ የኢሜይል አድራሻ ያስገቡ! (e.g. user@gmail.com)';
         }
         return '';
     }
