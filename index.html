@@ -72,10 +72,6 @@
                 <button type="button" class="theme-toggle" id="themeToggle" title="Toggle Theme (Dark/Light)" onclick="toggleTheme()" style="display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border-color); background: var(--card-bg); cursor: pointer; user-select: none;">
                     <span id="themeIcon" style="font-size: 22px; pointer-events: none;">🌙</span>
                 </button>
-                <button class="btn" id="feedbackNavBtn" onclick="openFeedbackModal()" title="View Visitor Feedback & Notifications" style="position: relative; display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px;">
-                    <i class="uil uil-bell" style="font-size: 18px; color: var(--first-color);"></i> Feedback
-                    <span id="feedbackBadge" style="background: #ef4444; color: white; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-left: 2px;">0</span>
-                </button>
                 <div class="nav-button">
                     <button class="btn" id="navCvBtn"><i class="uil uil-file-download-alt"></i> CV Download</button>
                 </div>
@@ -375,17 +371,6 @@
                                     <button type="submit" class="btn blue-btn">Send Comment / Message <i class="uil uil-message"></i></button>
                                 </div>
                             </form>
-
-                            <!-- Live Comments / Feedback Board -->
-                            <div class="comments-box" style="margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                                <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--first-color); display: flex; align-items: center; justify-content: space-between;">
-                                    <span><i class="uil uil-comments"></i> Visitor Comments & Feedback</span>
-                                    <span id="liveCommentsBadge" style="font-size: 13px; font-weight: 600; background: rgba(99,102,241,0.15); padding: 2px 10px; border-radius: 12px;">0 Comments</span>
-                                </h3>
-                                <div id="commentsListContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 280px; overflow-y: auto; padding-right: 4px;">
-                                    <!-- Populated dynamically via JS -->
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -470,36 +455,6 @@
                 <p>Copyright &copy; <a href="#home" style="text-decoration: none;">Yimen Anmaw</a> - All rights reserved</p>
             </div>
         </footer>
-    </div>
-
-    <!-- ----- FEEDBACK & NOTIFICATIONS MODAL ---------------- -->
-    <div id="feedbackModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.65); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px); padding: 20px;">
-        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 520px; max-height: 85vh; padding: 25px; box-shadow: 0 12px 40px rgba(0,0,0,0.35); display: flex; flex-direction: column; position: relative; color: var(--text-color);">
-            
-            <!-- Modal Header -->
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="uil uil-bell" style="font-size: 26px; color: var(--first-color);"></i>
-                    <h3 style="font-size: 18px; margin: 0; color: var(--text-color); font-weight: 700;">Feedback & Notification Hub</h3>
-                </div>
-                <button onclick="closeFeedbackModal()" style="background: rgba(120,120,120,0.15); border: none; font-size: 22px; cursor: pointer; color: var(--text-color); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">&times;</button>
-            </div>
-
-            <!-- Notification / Comments List -->
-            <div id="modalCommentsList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 5px; margin-bottom: 20px;">
-                <!-- Populated via JS -->
-            </div>
-
-            <!-- Modal Footer Actions -->
-            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 15px;">
-                <a href="mailto:yimenanmaw711@gmail.com?subject=Portfolio%20Direct%20Comment" target="_blank" style="color: var(--first-color); font-size: 13px; font-weight: 600; text-decoration: underline; display: flex; align-items: center; gap: 5px;">
-                    <i class="uil uil-envelope"></i> yimenanmaw711@gmail.com
-                </a>
-                <button class="btn blue-btn" onclick="closeFeedbackModal(); location.href='#contact';">
-                    <i class="uil uil-plus-circle"></i> Write Feedback
-                </button>
-            </div>
-        </div>
     </div>
 
     <!-- ----- TYPING JS Link ----- -->

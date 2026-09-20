@@ -92,14 +92,65 @@ body.dark-theme h6 {
     color: #f8fafc !important;
 }
 
-[data-theme="dark"] .nav-link, body.dark-theme .nav-link {
-    color: #cbd5e1;
+/* Light Theme Explicit Component Styling */
+:root[data-theme="light"],
+html:not(.dark-theme),
+body:not(.dark-theme) {
+    --body-color: #fafafa !important;
+    --card-bg: #ffffff !important;
+    --text-color: #282828 !important;
+    --text-color-second: #4b5563 !important;
+    --border-color: #e5e7eb !important;
 }
 
-[data-theme="dark"] .theme-toggle, body.dark-theme .theme-toggle {
-    background-color: #1e293b !important;
-    color: #f59e0b !important;
-    border-color: #334155 !important;
+[data-theme="light"] body, body:not(.dark-theme) {
+    background-color: #fafafa !important;
+    color: #282828 !important;
+}
+
+[data-theme="light"] nav, body:not(.dark-theme) nav {
+    background-color: #fafafa !important;
+}
+
+[data-theme="light"] .project-card,
+[data-theme="light"] .about-info,
+[data-theme="light"] .skills-box,
+[data-theme="light"] .file-card,
+[data-theme="light"] .form-control,
+[data-theme="light"] footer,
+body:not(.dark-theme) .project-card,
+body:not(.dark-theme) .about-info,
+body:not(.dark-theme) .skills-box,
+body:not(.dark-theme) .file-card,
+body:not(.dark-theme) .form-control,
+body:not(.dark-theme) footer {
+    background-color: #ffffff !important;
+    color: #282828 !important;
+    border-color: #e5e7eb !important;
+}
+
+[data-theme="light"] .input-field,
+[data-theme="light"] textarea,
+body:not(.dark-theme) .input-field,
+body:not(.dark-theme) textarea {
+    background-color: #fafafa !important;
+    color: #282828 !important;
+    border-color: #e5e7eb !important;
+}
+
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6,
+body:not(.dark-theme) h1,
+body:not(.dark-theme) h2,
+body:not(.dark-theme) h3,
+body:not(.dark-theme) h4,
+body:not(.dark-theme) h5,
+body:not(.dark-theme) h6 {
+    color: #282828 !important;
 }
 
 /* ----- BASE ----- */
