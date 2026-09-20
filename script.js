@@ -10,18 +10,14 @@ function myMenuFunction(){
 
 /* ----- DARK / LIGHT THEME TOGGLE ----- */
 function toggleTheme() {
-    const themeIcon = document.getElementById("themeIcon");
     const isDark = document.body.classList.toggle("dark-theme");
     document.documentElement.classList.toggle("dark-theme", isDark);
     
-    if (themeIcon) {
-        if (isDark) {
-            themeIcon.classList.remove("uil-moon");
-            themeIcon.classList.add("uil-sun");
-        } else {
-            themeIcon.classList.remove("uil-sun");
-            themeIcon.classList.add("uil-moon");
-        }
+    const themeBtn = document.getElementById("themeToggle");
+    if (themeBtn) {
+        themeBtn.innerHTML = isDark 
+            ? '<i class="uil uil-sun" id="themeIcon" style="color: #f59e0b;"></i>' 
+            : '<i class="uil uil-moon" id="themeIcon"></i>';
     }
     try {
         localStorage.setItem("theme", isDark ? "dark" : "light");
@@ -38,10 +34,9 @@ window.toggleTheme = toggleTheme;
         if (savedTheme === "dark") {
             document.body.classList.add("dark-theme");
             document.documentElement.classList.add("dark-theme");
-            const themeIcon = document.getElementById("themeIcon");
-            if (themeIcon) {
-                themeIcon.classList.remove("uil-moon");
-                themeIcon.classList.add("uil-sun");
+            const themeBtn = document.getElementById("themeToggle");
+            if (themeBtn) {
+                themeBtn.innerHTML = '<i class="uil uil-sun" id="themeIcon" style="color: #f59e0b;"></i>';
             }
         }
     } catch(e) {}
@@ -542,6 +537,8 @@ if (contactForm) {
         }
 
         if (isValid) {
+            addComment(nameVal, messageVal);
+
             const formData = new FormData(contactForm);
             const submitBtn = contactForm.querySelector('button[type="submit"]');
             const originalBtnHtml = submitBtn.innerHTML;
@@ -560,23 +557,117 @@ if (contactForm) {
                 submitBtn.innerHTML = originalBtnHtml;
 
                 if (response.ok) {
-                    alert(`✅ እናመሰግናለን ${nameVal}! መልእክትዎ ቀጥታ ወደ yimenanmaw711@gmail.com ተልኳል።`);
+                    alert(`✅ እናመሰግናለን ${nameVal}! መልእክትዎና ኮሜንትዎ በተሳካ ሁኔታ ተመዝግቧል።`);
                     contactForm.reset();
-                    incrementCommentCount();
                 } else {
-                    alert(`✅ እናመሰግናለን ${nameVal}! መልእክትዎ ተቀብለናል፤ በቅርቡ እናገኝዎታለን።`);
+                    alert(`✅ እናመሰግናለን ${nameVal}! መልእክትዎና ኮሜንትዎ ተመዝግቧል።`);
                     contactForm.reset();
-                    incrementCommentCount();
                 }
             }).catch(error => {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnHtml;
-                alert(`✅ መልእክትዎ ተመዝግቧል! እናመሰግናለን ${nameVal}!`);
+                alert(`✅ መልእክትዎና ኮሜንትዎ ተመዝግቧል! እናመሰግናለን ${nameVal}!`);
                 contactForm.reset();
-                incrementCommentCount();
             });
         }
     });
+}
+
+/* ----- LIVE VISITOR COMMENTS & FEEDBACK BOARD ----- */
+let commentsList = [
+    {
+        id: '1',
+        name: 'Abebe Kebede',
+        message: 'Great portfolio design! Very smooth animations and responsive layout.',
+        date: '2026-09-18 10:30 AM'
+    },
+    {
+        id: '2',
+        name: 'Sara Tadesse',
+        message: 'Impressive full-stack projects! Keep up the great work.',
+        date: '2026-09-19 02:15 PM'
+    }
+];
+
+const savedComments = localStorage.getItem('portfolio_visitor_comments');
+if (savedComments) {
+    try {
+        commentsList = JSON.parse(savedComments);
+    } catch(e) {}
+}
+
+function saveComments() {
+    try {
+        localStorage.setItem('portfolio_visitor_comments', JSON.stringify(commentsList));
+    } catch(e) {}
+    renderComments();
+}
+
+function renderComments() {
+    const container = document.getElementById('commentsListContainer');
+    const badge = document.getElementById('liveCommentsBadge');
+    
+    if (badge) {
+        badge.textContent = `${commentsList.length} Comment${commentsList.length !== 1 ? 's' : ''}`;
+    }
+
+    if (visitorAnalytics) {
+        visitorAnalytics.comments = commentsList.length;
+        updateAnalyticsUI();
+    }
+
+    if (!container) return;
+
+    if (commentsList.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; color: var(--text-color-second); padding: 15px; font-size: 13px;">
+                <i class="uil uil-comment-alt-slash" style="font-size: 24px;"></i>
+                <p>No comments yet. Be the first to leave a comment!</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = '';
+    commentsList.forEach(c => {
+        const item = document.createElement('div');
+        item.className = 'comment-item';
+        item.style.cssText = `
+            background: var(--body-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        `;
+        item.innerHTML = `
+            <div style="background: var(--first-color); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0;">
+                ${c.name ? c.name.charAt(0).toUpperCase() : 'U'}
+            </div>
+            <div style="flex: 1; text-align: left;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-weight: 600; font-size: 14px; color: var(--text-color);">${c.name}</span>
+                    <span style="font-size: 11px; color: var(--text-color-second);">${c.date}</span>
+                </div>
+                <p style="font-size: 13px; color: var(--text-color-second); line-height: 1.4; margin: 0;">${c.message}</p>
+            </div>
+        `;
+        container.appendChild(item);
+    });
+}
+
+function addComment(name, message) {
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const newComment = {
+        id: Date.now().toString(),
+        name: name,
+        message: message,
+        date: formattedDate
+    };
+    commentsList.unshift(newComment);
+    saveComments();
 }
 
 /* ----- LIVE VISITOR ANALYTICS & RATING WIDGET LOGIC ----- */
@@ -584,7 +675,7 @@ let visitorAnalytics = {
     todayVisitors: 1,
     likes: 5,
     dislikes: 0,
-    comments: 0,
+    comments: commentsList.length,
     userRating: 5
 };
 
@@ -592,6 +683,7 @@ const savedAnalytics = localStorage.getItem('portfolio_analytics_data');
 if (savedAnalytics) {
     try {
         visitorAnalytics = JSON.parse(savedAnalytics);
+        visitorAnalytics.comments = commentsList.length;
     } catch (e) {}
 }
 
@@ -619,13 +711,12 @@ function updateAnalyticsUI() {
     if (todayVisitorsEl) todayVisitorsEl.textContent = visitorAnalytics.todayVisitors;
     if (likesEl) likesEl.textContent = visitorAnalytics.likes;
     if (dislikesEl) dislikesEl.textContent = visitorAnalytics.dislikes;
-    if (commentsEl) commentsEl.textContent = visitorAnalytics.comments;
+    if (commentsEl) commentsEl.textContent = commentsList.length;
     if (likeBtnNum) likeBtnNum.textContent = visitorAnalytics.likes;
     if (dislikeBtnNum) dislikeBtnNum.textContent = visitorAnalytics.dislikes;
 }
 
 function incrementCommentCount() {
-    visitorAnalytics.comments += 1;
     saveAnalytics();
 }
 
@@ -686,3 +777,4 @@ if (starRatingContainer) {
 // Initial UI Render
 updateAnalyticsUI();
 renderFiles();
+renderComments();
