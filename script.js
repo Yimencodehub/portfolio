@@ -11,13 +11,21 @@ function myMenuFunction(){
 /* ----- DARK / LIGHT THEME TOGGLE ----- */
 function toggleTheme() {
     const themeIcon = document.getElementById("themeIcon");
-    document.body.classList.toggle("dark-theme");
-    const isDark = document.body.classList.contains("dark-theme");
+    const isDark = document.body.classList.toggle("dark-theme");
+    document.documentElement.classList.toggle("dark-theme", isDark);
     
     if (themeIcon) {
-        themeIcon.className = isDark ? "uil uil-sun" : "uil uil-moon";
+        if (isDark) {
+            themeIcon.classList.remove("uil-moon");
+            themeIcon.classList.add("uil-sun");
+        } else {
+            themeIcon.classList.remove("uil-sun");
+            themeIcon.classList.add("uil-moon");
+        }
     }
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+    try {
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+    } catch(e) {}
 }
 
 // Make toggleTheme available globally on window
@@ -25,14 +33,18 @@ window.toggleTheme = toggleTheme;
 
 // Check and apply saved theme immediately
 (function initTheme() {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-        document.body.classList.add("dark-theme");
-        const themeIcon = document.getElementById("themeIcon");
-        if (themeIcon) {
-            themeIcon.className = "uil uil-sun";
+    try {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "dark") {
+            document.body.classList.add("dark-theme");
+            document.documentElement.classList.add("dark-theme");
+            const themeIcon = document.getElementById("themeIcon");
+            if (themeIcon) {
+                themeIcon.classList.remove("uil-moon");
+                themeIcon.classList.add("uil-sun");
+            }
         }
-    }
+    } catch(e) {}
 })();
 
 // Attach event listeners once DOM is loaded

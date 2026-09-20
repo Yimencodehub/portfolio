@@ -58,6 +58,12 @@ html.dark-theme .theme-toggle, body.dark-theme .theme-toggle {
     border-color: #334155;
 }
 
+/* Force Sun icon in Dark Mode and Moon icon in Light Mode */
+html.dark-theme #themeIcon::before,
+body.dark-theme #themeIcon::before {
+    content: "\ea1a" !important; /* Sun icon in Unicons */
+}
+
 html.dark-theme .drop-zone, body.dark-theme .drop-zone {
     background: rgba(129, 140, 248, 0.05);
 }
