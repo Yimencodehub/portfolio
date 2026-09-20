@@ -69,9 +69,9 @@
                 </ul>
             </div>
             <div class="nav-actions">
-                <div class="theme-toggle" id="themeToggle" title="Toggle Theme" onclick="toggleTheme()" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; user-select: none;">
-                    <span id="themeIcon" style="font-size: 20px;">🌙</span>
-                </div>
+                <button type="button" class="theme-toggle" id="themeToggle" title="Toggle Theme (Dark/Light)" onclick="toggleTheme()" style="display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border-color); background: var(--card-bg); cursor: pointer; user-select: none;">
+                    <span id="themeIcon" style="font-size: 22px; pointer-events: none;">🌙</span>
+                </button>
                 <button class="btn" id="feedbackNavBtn" onclick="openFeedbackModal()" title="View Visitor Feedback & Notifications" style="position: relative; display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px;">
                     <i class="uil uil-bell" style="font-size: 18px; color: var(--first-color);"></i> Feedback
                     <span id="feedbackBadge" style="background: #ef4444; color: white; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-left: 2px;">0</span>
@@ -353,7 +353,10 @@
                     </div>
                     <div class="col">
                         <div class="form-control">
-                            <form id="contactForm" action="https://formspree.io/f/xknlqrqr" method="POST" novalidate>
+                            <form id="contactForm" action="https://formsubmit.co/ajax/yimenanmaw711@gmail.com" method="POST" novalidate>
+                                <input type="hidden" name="_subject" value="New Portfolio Comment & Message from Visitor">
+                                <input type="hidden" name="_captcha" value="false">
+                                <input type="hidden" name="_template" value="table">
                                 <div class="form-inputs" style="display: flex; flex-direction: column; gap: 15px;">
                                     <div>
                                         <input type="text" id="nameInput" name="name" class="input-field" placeholder="Full Name" required>
@@ -365,11 +368,11 @@
                                     </div>
                                 </div>
                                 <div class="text-area" style="margin-top: 15px;">
-                                    <textarea id="messageInput" name="message" placeholder="Message (min 5 characters)" required></textarea>
+                                    <textarea id="messageInput" name="message" placeholder="Write your message or comment here..." required></textarea>
                                     <small id="messageError" style="color: #ef4444; display: none; font-size: 12px; margin-top: -10px; font-weight: 500;"></small>
                                 </div>
                                 <div class="form-button" style="margin-top: 15px;">
-                                    <button type="submit" class="btn">Send <i class="uil uil-message"></i></button>
+                                    <button type="submit" class="btn blue-btn">Send Comment / Message <i class="uil uil-message"></i></button>
                                 </div>
                             </form>
 

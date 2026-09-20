@@ -546,9 +546,9 @@ if (contactForm) {
             const originalBtnHtml = submitBtn.innerHTML;
             
             submitBtn.disabled = true;
-            submitBtn.innerHTML = 'Sending... <i class="uil uil-spinner-alt"></i>';
+            submitBtn.innerHTML = 'Sending to yimenanmaw711@gmail.com... <i class="uil uil-spinner-alt"></i>';
 
-            fetch('https://formspree.io/f/xknlqrqr', {
+            fetch('https://formsubmit.co/ajax/yimenanmaw711@gmail.com', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -557,19 +557,20 @@ if (contactForm) {
             }).then(response => {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnHtml;
-
-                if (response.ok) {
+                alert(`✅ እናመሰግናለን ${nameVal}! መልእክትዎና ኮሜንትዎ ቀጥታ ወደ yimenanmaw711@gmail.com ተልኳል።`);
+                contactForm.reset();
+            }).catch(error => {
+                // Fallback to Formspree if FormSubmit is blocked
+                fetch('https://formspree.io/f/xknlqrqr', {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                }).finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
                     alert(`✅ እናመሰግናለን ${nameVal}! መልእክትዎና ኮሜንትዎ በተሳካ ሁኔታ ተመዝግቧል።`);
                     contactForm.reset();
-                } else {
-                    alert(`✅ እናመሰግናለን ${nameVal}! መልእክትዎና ኮሜንትዎ ተመዝግቧል።`);
-                    contactForm.reset();
-                }
-            }).catch(error => {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnHtml;
-                alert(`✅ መልእክትዎና ኮሜንትዎ ተመዝግቧል! እናመሰግናለን ${nameVal}!`);
-                contactForm.reset();
+                });
             });
         }
     });
