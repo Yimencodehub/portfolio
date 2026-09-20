@@ -10,34 +10,15 @@
     <link rel="stylesheet" href="style.css">
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
-    <!-- Inline Theme Toggle Script -->
+    <!-- Flash prevention: apply dark class before paint so no white flash -->
     <script>
-        function toggleTheme() {
-            var isDark = document.body.classList.toggle("dark-theme");
-            document.documentElement.classList.toggle("dark-theme", isDark);
-            document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-            var iconSpan = document.getElementById("themeIcon");
-            if (iconSpan) {
-                iconSpan.textContent = isDark ? "☀️" : "🌙";
-            }
-            try {
-                localStorage.setItem("theme", isDark ? "dark" : "light");
-            } catch(e) {}
-        }
-        (function() {
+        (function () {
             try {
                 if (localStorage.getItem("theme") === "dark") {
                     document.documentElement.classList.add("dark-theme");
                     document.documentElement.setAttribute("data-theme", "dark");
-                    window.addEventListener("DOMContentLoaded", function() {
-                        document.body.classList.add("dark-theme");
-                        var iconSpan = document.getElementById("themeIcon");
-                        if (iconSpan) {
-                            iconSpan.textContent = "☀️";
-                        }
-                    });
                 }
-            } catch(e) {}
+            } catch (e) {}
         })();
     </script>
 </head>
@@ -165,12 +146,12 @@
                         </div>
                         <div class="skills-box">
                             <div class="skills-header">
-                                <h3>Database & Tools</h3>
+                                <h3>Database &amp; Tools</h3>
                             </div>
                             <div class="skills-list">
                                 <span>MongoDB</span>
                                 <span>PostgreSQL</span>
-                                <span>Git & GitHub</span>
+                                <span>Git &amp; GitHub</span>
                                 <span>REST APIs</span>
                             </div>
                         </div>

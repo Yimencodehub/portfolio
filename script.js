@@ -9,45 +9,38 @@ function myMenuFunction(){
 }
 
 /* ----- DARK / LIGHT THEME TOGGLE ----- */
-function toggleTheme() {
-    const isDark = document.body.classList.toggle("dark-theme");
-    document.documentElement.classList.toggle("dark-theme", isDark);
-    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-    
-    const iconSpan = document.getElementById("themeIcon");
-    if (iconSpan) {
-        iconSpan.textContent = isDark ? "☀️" : "🌙";
+function applyTheme(dark) {
+    if (dark) {
+        document.documentElement.classList.add("dark-theme");
+        document.body.classList.add("dark-theme");
+        document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+        document.documentElement.classList.remove("dark-theme");
+        document.body.classList.remove("dark-theme");
+        document.documentElement.setAttribute("data-theme", "light");
     }
-    try {
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-    } catch(e) {}
+    const iconSpan = document.getElementById("themeIcon");
+    if (iconSpan) iconSpan.textContent = dark ? "☀️" : "🌙";
 }
 
-// Make toggleTheme available globally on window
+function toggleTheme() {
+    const isDark = document.body.classList.contains("dark-theme");
+    applyTheme(!isDark);
+    try { localStorage.setItem("theme", !isDark ? "dark" : "light"); } catch(e) {}
+}
+
+// Make globally available (for onclick in HTML)
 window.toggleTheme = toggleTheme;
+window.applyTheme  = applyTheme;
 
-// Check and apply saved theme immediately
-(function initTheme() {
-    try {
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme === "dark") {
-            document.body.classList.add("dark-theme");
-            document.documentElement.classList.add("dark-theme");
-            document.documentElement.setAttribute("data-theme", "dark");
-            const iconSpan = document.getElementById("themeIcon");
-            if (iconSpan) {
-                iconSpan.textContent = "☀️";
-            }
-        }
-    } catch(e) {}
-})();
+// Apply theme as soon as DOM is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+    let saved = "light";
+    try { saved = localStorage.getItem("theme") || "light"; } catch(e) {}
+    applyTheme(saved === "dark");
 
-// Attach event listeners once DOM is loaded
-document.addEventListener("DOMContentLoaded", function() {
     const btn = document.getElementById("themeToggle");
-    if (btn) {
-        btn.addEventListener("click", toggleTheme);
-    }
+    if (btn) btn.addEventListener("click", toggleTheme);
 });
 
 /* ----- HEADER SHADOW ON SCROLL ----- */

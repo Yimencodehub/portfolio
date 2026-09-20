@@ -1,55 +1,85 @@
-# Modern Portfolio & File Hub
+# Portfolio Full-Stack App
 
-A modern, responsive, high-performance Developer Portfolio website featuring dynamic **File Upload & Download Management**, **Dark/Light Theme Switcher**, and **Interactive UI Components**.
-
-## 🌟 Features
-
-- **Modern Glassmorphism & Responsive UI**: Looks great on Desktop, Tablet, and Mobile.
-- **Dark / Light Theme Toggle**: Seamless dark mode support with state persistence.
-- **File Manager (Upload & Download)**:
-  - Drag & Drop or Browse file uploads.
-  - Interactive file list with download and delete controls.
-  - CV Quick Download integration across Navbar, Hero, and About sections.
-- **Deployment Ready**: Out-of-the-box support for Vercel, Netlify, and GitHub Pages.
+**Frontend**: Vue 3 + Tailwind CSS  
+**Backend**: Express.js + PostgreSQL  
+**REST API**: Go Gin + MySQL
 
 ---
 
-## 🚀 How to Push to GitHub & Deploy
+## Quick Start
 
-### Step 1: Initialize Git and Commit Changes
-Open your terminal in the project folder and run:
-
+### 1. Frontend
 ```bash
-git init
-git add .
-git commit -m "Upgrade Portfolio with File Manager & Dark Mode"
+cd frontend
+npm install
+npm run dev
+# → http://localhost:5173
 ```
 
-### Step 2: Push to Your GitHub Repository
-Create a new repository on GitHub, then run:
-
+### 2. Backend (Express + PostgreSQL)
 ```bash
-git branch -M main
-git remote add origin https://github.com/Yimencodehub/Portfolio.git
-git push -u origin main
+cd backend
+npm install
+# Edit .env with your PostgreSQL credentials
+npm run dev
+# → http://localhost:3000
+```
+
+### 3. Go API (Gin + MySQL)
+```bash
+cd go-api
+# Edit .env with your MySQL credentials
+go mod tidy
+go run main.go
+# → http://localhost:8080
 ```
 
 ---
 
-## 🌐 Free Deployment Options
+## Environment Files
 
-### Option 1: Vercel (Recommended)
-1. Go to [Vercel.com](https://vercel.com) and log in with your GitHub account.
-2. Click **"Add New Project"** -> Import your GitHub portfolio repository.
-3. Keep default settings and click **Deploy**.
-4. Your website is now live with a free custom URL!
+### backend/.env
+```
+PG_HOST=localhost
+PG_PORT=5432
+PG_USER=postgres
+PG_PASSWORD=YOUR_PASSWORD
+PG_DATABASE=portfolio_db
+PORT=3000
+```
 
-### Option 2: Netlify
-1. Go to [Netlify.com](https://netlify.com) and log in.
-2. Click **"Add new site"** -> **"Import an existing project"**.
-3. Connect your GitHub repository and click **Deploy Site**.
+### go-api/.env
+```
+MYSQL_DSN=root:YOUR_PASSWORD@tcp(localhost:3306)/portfolio_go?parseTime=true
+GO_PORT=8080
+```
 
-### Option 3: GitHub Pages
-1. Go to your repository settings on GitHub.
-2. Navigate to **Pages** section on the left sidebar.
-3. Under **Branch**, select `main` / `root` and click **Save**.
+---
+
+## API Reference
+
+### Express (Port 3000)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/contact | Submit contact form |
+| GET | /api/files | List uploaded files |
+| POST | /api/files/upload | Upload files |
+| GET | /api/files/download/:id | Download file |
+| GET | /api/stats | Get likes/views/rating |
+| POST | /api/stats/like | Like the portfolio |
+| POST | /api/stats/dislike | Dislike |
+| POST | /api/stats/view | Record page view |
+| POST | /api/stats/rating | Submit star rating |
+
+### Gin (Port 8080)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/projects | List all projects |
+| POST | /api/projects | Add new project |
+| DELETE | /api/projects/:id | Delete project |
+| GET | /api/analytics | Get analytics summary |
+
+---
+
+## Dark / Light Mode
+Click the ☀️/🌙 button in the top navbar. Preference is saved to localStorage and applied instantly.
