@@ -9,27 +9,28 @@ function myMenuFunction(){
 }
 
 /* ----- DARK / LIGHT THEME TOGGLE ----- */
-const themeToggleBtn = document.getElementById("themeToggle");
-const themeIcon = document.getElementById("themeIcon");
-
-// Check saved theme from localStorage
-const currentTheme = localStorage.getItem("theme");
-if (currentTheme === "dark") {
-    document.body.classList.add("dark-theme");
-    themeIcon.className = "uil uil-sun";
+function toggleTheme() {
+    const themeIcon = document.getElementById("themeIcon");
+    document.body.classList.toggle("dark-theme");
+    const isDark = document.body.classList.contains("dark-theme");
+    
+    if (themeIcon) {
+        themeIcon.className = isDark ? "uil uil-sun" : "uil uil-moon";
+    }
+    localStorage.setItem("theme", isDark ? "dark" : "light");
 }
 
-themeToggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-theme");
-    let theme = "light";
-    if (document.body.classList.contains("dark-theme")) {
-        theme = "dark";
-        themeIcon.className = "uil uil-sun";
-    } else {
-        themeIcon.className = "uil uil-moon";
+// Check and apply saved theme immediately
+(function initTheme() {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-theme");
+        const themeIcon = document.getElementById("themeIcon");
+        if (themeIcon) {
+            themeIcon.className = "uil uil-sun";
+        }
     }
-    localStorage.setItem("theme", theme);
-});
+})();
 
 /* ----- HEADER SHADOW ON SCROLL ----- */
 window.addEventListener('scroll', () => {

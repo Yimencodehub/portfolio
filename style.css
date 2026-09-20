@@ -19,13 +19,41 @@
 
 /* Dark Theme Variables */
 body.dark-theme {
-    --body-color: rgb(15, 23, 42);
-    --card-bg: rgb(30, 41, 59);
-    --text-color: rgb(241, 245, 249);
-    --text-color-second: rgb(148, 163, 184);
-    --text-color-third: rgb(52, 211, 153);
-    --border-color: rgb(51, 65, 85);
-    --first-shadow-color: rgba(0, 0, 0, 0.4);
+    --body-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-color: #f8fafc;
+    --text-color-second: #94a3b8;
+    --text-color-third: #34d399;
+    --border-color: #334155;
+    --first-shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Dark Theme Overrides & Smooth Transitions */
+body, nav, .btn, .file-card, .about-info, .skills-box, .project-card, .form-control, .input-field, textarea, footer, .theme-toggle, .social_icons .icon, .drop-zone, .file-item {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-theme nav {
+    background: #0f172a;
+}
+
+body.dark-theme .nav-link {
+    color: #cbd5e1;
+}
+
+body.dark-theme .nav-link:hover, body.dark-theme .active-link {
+    color: #818cf8;
+    background: rgba(129, 140, 248, 0.15);
+}
+
+body.dark-theme .theme-toggle {
+    background: #1e293b;
+    color: #f59e0b;
+    border-color: #334155;
+}
+
+body.dark-theme .drop-zone {
+    background: rgba(129, 140, 248, 0.05);
 }
 
 /* ----- BASE ----- */
