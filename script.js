@@ -14,11 +14,9 @@ function toggleTheme() {
     document.documentElement.classList.toggle("dark-theme", isDark);
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
     
-    const themeBtn = document.getElementById("themeToggle");
-    if (themeBtn) {
-        themeBtn.innerHTML = isDark 
-            ? '<i class="uil uil-sun" id="themeIcon" style="color: #f59e0b;"></i>' 
-            : '<i class="uil uil-moon" id="themeIcon"></i>';
+    const iconSpan = document.getElementById("themeIcon");
+    if (iconSpan) {
+        iconSpan.textContent = isDark ? "☀️" : "🌙";
     }
     try {
         localStorage.setItem("theme", isDark ? "dark" : "light");
@@ -36,9 +34,9 @@ window.toggleTheme = toggleTheme;
             document.body.classList.add("dark-theme");
             document.documentElement.classList.add("dark-theme");
             document.documentElement.setAttribute("data-theme", "dark");
-            const themeBtn = document.getElementById("themeToggle");
-            if (themeBtn) {
-                themeBtn.innerHTML = '<i class="uil uil-sun" id="themeIcon" style="color: #f59e0b;"></i>';
+            const iconSpan = document.getElementById("themeIcon");
+            if (iconSpan) {
+                iconSpan.textContent = "☀️";
             }
         }
     } catch(e) {}
