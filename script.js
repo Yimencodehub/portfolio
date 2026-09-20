@@ -20,6 +20,9 @@ function toggleTheme() {
     localStorage.setItem("theme", isDark ? "dark" : "light");
 }
 
+// Make toggleTheme available globally on window
+window.toggleTheme = toggleTheme;
+
 // Check and apply saved theme immediately
 (function initTheme() {
     const savedTheme = localStorage.getItem("theme");
@@ -31,6 +34,14 @@ function toggleTheme() {
         }
     }
 })();
+
+// Attach event listeners once DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("themeToggle");
+    if (btn) {
+        btn.addEventListener("click", toggleTheme);
+    }
+});
 
 /* ----- HEADER SHADOW ON SCROLL ----- */
 window.addEventListener('scroll', () => {

@@ -187,6 +187,10 @@ nav{
     font-size: 20px;
     color: var(--text-color);
     transition: all 0.3s ease;
+    user-select: none;
+}
+.theme-toggle i {
+    pointer-events: none;
 }
 .theme-toggle:hover {
     transform: rotate(15deg);
