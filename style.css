@@ -18,7 +18,7 @@
 }
 
 /* Dark Theme Variables */
-body.dark-theme {
+html.dark-theme, body.dark-theme {
     --body-color: #0f172a;
     --card-bg: #1e293b;
     --text-color: #f8fafc;
@@ -29,30 +29,36 @@ body.dark-theme {
 }
 
 /* Dark Theme Overrides & Smooth Transitions */
-body, nav, .btn, .file-card, .about-info, .skills-box, .project-card, .form-control, .input-field, textarea, footer, .theme-toggle, .social_icons .icon, .drop-zone, .file-item {
+html, body, nav, .btn, .file-card, .about-info, .skills-box, .project-card, .form-control, .input-field, textarea, footer, .theme-toggle, .social_icons .icon, .drop-zone, .file-item {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-body.dark-theme nav {
-    background: #0f172a;
+html.dark-theme, body.dark-theme {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
 }
 
-body.dark-theme .nav-link {
+html.dark-theme nav, body.dark-theme nav {
+    background: #0f172a !important;
+}
+
+html.dark-theme .nav-link, body.dark-theme .nav-link {
     color: #cbd5e1;
 }
 
-body.dark-theme .nav-link:hover, body.dark-theme .active-link {
+html.dark-theme .nav-link:hover, body.dark-theme .nav-link:hover,
+html.dark-theme .active-link, body.dark-theme .active-link {
     color: #818cf8;
     background: rgba(129, 140, 248, 0.15);
 }
 
-body.dark-theme .theme-toggle {
+html.dark-theme .theme-toggle, body.dark-theme .theme-toggle {
     background: #1e293b;
     color: #f59e0b;
     border-color: #334155;
 }
 
-body.dark-theme .drop-zone {
+html.dark-theme .drop-zone, body.dark-theme .drop-zone {
     background: rgba(129, 140, 248, 0.05);
 }
 
