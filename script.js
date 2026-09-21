@@ -220,8 +220,8 @@ function renderFiles() {
             `;
         } else {
             adminStatusBadge.innerHTML = `
-                <span style="font-size: 13px; color: var(--text-color-second); font-weight: 500; background: rgba(99, 102, 241, 0.1); padding: 4px 12px; border-radius: 12px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;" onclick="openAdminLoginModal()" title="Click to Login as Owner">
-                    <i class="uil uil-eye"></i> View & Download Only <i class="uil uil-lock-alt" style="font-size: 12px; opacity: 0.7;"></i>
+                <span style="font-size: 13px; color: var(--text-color-second); font-weight: 500; background: rgba(99, 102, 241, 0.1); padding: 6px 14px; border-radius: 12px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;" onclick="openAdminLoginModal()" title="Click to Login as Owner (Upload, Edit, Delete)">
+                    <i class="uil uil-lock-alt" style="font-size: 14px; color: var(--first-color);"></i> Upload, edit, delete file only owner
                 </span>
             `;
         }
