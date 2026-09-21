@@ -238,7 +238,10 @@ function renderFiles() {
                     <span class="file-meta">${file.size} • ${file.category || 'General'} • ${file.date}</span>
                 </div>
             </div>
-            <div class="file-actions">
+            <div class="file-actions" style="display: flex; gap: 8px;">
+                <button class="action-btn view-action" onclick="viewFile('${file.id}')" title="View / Open File" style="background: rgba(99, 102, 241, 0.15); color: var(--first-color); border: 1px solid var(--first-color); padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 5px;">
+                    <i class="uil uil-eye"></i> View
+                </button>
                 <button class="action-btn download-action" onclick="downloadFile('${file.id}')" title="Download File">
                     <i class="uil uil-download-alt"></i> Download
                 </button>
@@ -247,6 +250,21 @@ function renderFiles() {
         fileListContainer.appendChild(item);
     });
 }
+
+// View File Function (View / Preview only)
+window.viewFile = function (id) {
+    const file = filesArray.find(f => f.id === id);
+    if (!file) return;
+
+    if (file.dataUrl) {
+        const win = window.open();
+        if (win) {
+            win.document.write(`<iframe src="${file.dataUrl}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+        }
+    } else {
+        alert(`📄 ${file.name} (View Mode): ይህ ሰነድ በሳይቱ ላይ ዝግጁ ነው! ለማየት ወይም ለማውረድ Download አዝራሩን ይጠቀሙ።`);
+    }
+};
 
 // Download File Function
 window.downloadFile = function (id) {
