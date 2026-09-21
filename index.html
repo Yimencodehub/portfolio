@@ -269,38 +269,24 @@
                 </div>
             </section>
 
-            <!-- -------------- FILE MANAGER SECTION (UPLOAD & DOWNLOAD) ---------------- -->
+            <!-- -------------- FILE MANAGER SECTION (READ-ONLY FOR VISITORS) ---------------- -->
             <section class="section" id="files">
                 <div class="top-header">
                     <h1>File Center & CV Hub</h1>
-                    <span>Upload any file — Image, PDF, Document, Video, ZIP and more. No size limit.</span>
+                    <span>View, preview, and download CV, documents, and materials.</span>
                 </div>
                 
-                <div class="file-manager-grid">
-                    <!-- Upload Box -->
-                    <div class="file-card upload-card">
-                        <div class="file-card-header">
-                            <i class="uil uil-cloud-upload"></i>
-                            <h3>Upload Any File</h3>
-                        </div>
-                        <div class="drop-zone" id="dropZone">
-                            <i class="uil uil-file-upload-alt"></i>
-                            <p>Drag & Drop files here or <span>Browse</span></p>
-                            <small style="color: var(--text-color-second); display: block; margin-top: 6px; font-weight: 500;">📁 All file types accepted — Image, PDF, Word, Video, ZIP &amp; more. No size limit.</small>
-                            <input type="file" id="fileInput" accept="*/*" hidden multiple>
-                        </div>
-                        <small id="uploadError" style="color: #ef4444; display: none; font-size: 13px; font-weight: 600; margin-bottom: 10px;"></small>
-                        <div class="upload-controls">
-                            <input type="text" id="fileCategory" class="input-field" placeholder="Description / Category (e.g. CV, Image, Doc)">
-                            <button class="btn blue-btn" id="uploadBtn"><i class="uil uil-upload"></i> Upload File</button>
-                        </div>
-                    </div>
-
+                <div class="file-manager-grid" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
                     <!-- File List / Download Box -->
                     <div class="file-card list-card">
-                        <div class="file-card-header">
-                            <i class="uil uil-folder-heart"></i>
-                            <h3>Available Downloads</h3>
+                        <div class="file-card-header" style="justify-content: space-between;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <i class="uil uil-folder-heart"></i>
+                                <h3>Available Files & Documents</h3>
+                            </div>
+                            <span style="font-size: 13px; color: var(--text-color-second); font-weight: 500; background: rgba(99, 102, 241, 0.1); padding: 4px 12px; border-radius: 12px;">
+                                <i class="uil uil-eye"></i> View & Download Only
+                            </span>
                         </div>
                         <div class="file-list" id="fileList">
                             <!-- Populated dynamically via JS -->

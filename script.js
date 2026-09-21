@@ -155,11 +155,7 @@ window.addEventListener('scroll', () => {
     });
 });
 
-/* ----- FILE MANAGER LOGIC (UPLOAD & DOWNLOAD) ----- */
-const dropZone = document.getElementById('dropZone');
-const fileInput = document.getElementById('fileInput');
-const uploadBtn = document.getElementById('uploadBtn');
-const fileCategoryInput = document.getElementById('fileCategory');
+/* ----- FILE MANAGER LOGIC (READ-ONLY VIEW & DOWNLOAD FOR VISITORS) ----- */
 const fileListContainer = document.getElementById('fileList');
 
 // Initial Sample Files
@@ -244,75 +240,12 @@ function renderFiles() {
             </div>
             <div class="file-actions">
                 <button class="action-btn download-action" onclick="downloadFile('${file.id}')" title="Download File">
-                    <i class="uil uil-download-alt"></i>
-                </button>
-                <button class="action-btn delete-action" onclick="deleteFile('${file.id}')" title="Delete File">
-                    <i class="uil uil-trash-alt"></i>
+                    <i class="uil uil-download-alt"></i> Download
                 </button>
             </div>
         `;
         fileListContainer.appendChild(item);
     });
-}
-
-// Handle Drag and Drop
-dropZone.addEventListener('click', () => fileInput.click());
-dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-});
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    if (e.dataTransfer.files.length > 0) {
-        handleFiles(e.dataTransfer.files);
-    }
-});
-
-fileInput.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) {
-        handleFiles(e.target.files);
-    }
-});
-
-uploadBtn.addEventListener('click', () => {
-    if (fileInput.files.length > 0) {
-        handleFiles(fileInput.files);
-    } else {
-        fileInput.click();
-    }
-});
-
-// Process Uploaded Files — any type, any size
-function handleFiles(files) {
-    const uploadError = document.getElementById('uploadError');
-    if (uploadError) uploadError.style.display = 'none';
-
-    const category = fileCategoryInput.value.trim() || 'Document';
-
-    Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const newFile = {
-                id: Date.now().toString() + Math.random().toString(36).substr(2, 4),
-                name: file.name,
-                size: file.size < 1024 * 1024
-                    ? (file.size / 1024).toFixed(1) + ' KB'
-                    : (file.size / (1024 * 1024)).toFixed(2) + ' MB',
-                category: category,
-                date: new Date().toISOString().split('T')[0],
-                dataUrl: e.target.result
-            };
-            filesArray.unshift(newFile);
-            saveFiles();
-            renderFiles();
-            alert(`✅ "${file.name}" በተሳካ ሁኔታ ተጫነ! (Successfully uploaded)`);
-        };
-        reader.readAsDataURL(file);
-    });
-    fileCategoryInput.value = '';
-    fileInput.value = '';
 }
 
 // Download File Function
@@ -329,15 +262,6 @@ window.downloadFile = function (id) {
         document.body.removeChild(a);
     } else {
         downloadDefaultCV();
-    }
-};
-
-// Delete File Function
-window.deleteFile = function (id) {
-    if (confirm(`የተመረጠውን ፋይል ማስወገድ ይፈልጋሉ?`)) {
-        filesArray = filesArray.filter(f => f.id !== id);
-        saveFiles();
-        renderFiles();
     }
 };
 
