@@ -511,31 +511,54 @@ nav{
     gap: 8px;
 }
 .action-btn {
-    width: 36px;
-    height: 36px;
+    padding: 6px 14px;
+    height: 38px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    transition: all 0.2s ease;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+.view-action {
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--first-color);
+    border: 1px solid var(--first-color);
+}
+.view-action:hover {
+    background: var(--first-color);
+    color: #fff;
 }
 .download-action {
     background: rgba(16, 185, 129, 0.15);
-    color: var(--text-color-third);
+    color: #10b981;
+    border: 1px solid #10b981;
 }
 .download-action:hover {
-    background: var(--text-color-third);
+    background: #10b981;
+    color: #fff;
+}
+.edit-action {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid #f59e0b;
+}
+.edit-action:hover {
+    background: #f59e0b;
     color: #fff;
 }
 .delete-action {
     background: rgba(239, 68, 68, 0.15);
-    color: rgb(239, 68, 68);
+    color: #ef4444;
+    border: 1px solid #ef4444;
 }
 .delete-action:hover {
-    background: rgb(239, 68, 68);
+    background: #ef4444;
     color: #fff;
 }
 

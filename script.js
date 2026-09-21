@@ -265,10 +265,10 @@ function renderFiles() {
         let adminButtons = '';
         if (isAdminLoggedIn()) {
             adminButtons = `
-                <button class="action-btn edit-action" onclick="editFile('${file.id}')" title="Edit File Details" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid #f59e0b; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+                <button class="action-btn edit-action" onclick="editFile('${file.id}')" title="Edit File Details">
                     <i class="uil uil-pen"></i> Edit
                 </button>
-                <button class="action-btn delete-action" onclick="deleteFile('${file.id}')" title="Delete File" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+                <button class="action-btn delete-action" onclick="deleteFile('${file.id}')" title="Delete File">
                     <i class="uil uil-trash-alt"></i> Delete
                 </button>
             `;
@@ -282,8 +282,8 @@ function renderFiles() {
                     <span class="file-meta">${file.size} • ${file.category || 'General'} • ${file.date}</span>
                 </div>
             </div>
-            <div class="file-actions" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-                <button class="action-btn view-action" onclick="viewFile('${file.id}')" title="View / Open File" style="background: rgba(99, 102, 241, 0.15); color: var(--first-color); border: 1px solid var(--first-color); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+            <div class="file-actions">
+                <button class="action-btn view-action" onclick="viewFile('${file.id}')" title="View / Open File">
                     <i class="uil uil-eye"></i> View
                 </button>
                 <button class="action-btn download-action" onclick="downloadFile('${file.id}')" title="Download File">
