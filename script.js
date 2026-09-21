@@ -199,9 +199,40 @@ function saveFiles() {
     }
 }
 
+// Check Admin Mode (Password protected for Yimen)
+function isAdminLoggedIn() {
+    return localStorage.getItem("admin_logged_in") === "true";
+}
+
 // Render File Items
 function renderFiles() {
     fileListContainer.innerHTML = '';
+    
+    // Admin Banner Control in File Section Header
+    const adminStatusBadge = document.getElementById("adminStatusBadge");
+    if (adminStatusBadge) {
+        if (isAdminLoggedIn()) {
+            adminStatusBadge.innerHTML = `
+                <span style="font-size: 13px; color: #10b981; font-weight: 600; background: rgba(16, 185, 129, 0.15); padding: 4px 12px; border-radius: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                    <i class="uil uil-check-circle"></i> Owner Admin Mode Active 
+                    <button onclick="adminLogout()" style="background: none; border: none; color: #ef4444; cursor: pointer; text-decoration: underline; font-size: 12px; margin-left: 8px;">Logout</button>
+                </span>
+            `;
+        } else {
+            adminStatusBadge.innerHTML = `
+                <span style="font-size: 13px; color: var(--text-color-second); font-weight: 500; background: rgba(99, 102, 241, 0.1); padding: 4px 12px; border-radius: 12px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;" onclick="openAdminLoginModal()" title="Click to Login as Owner">
+                    <i class="uil uil-eye"></i> View & Download Only <i class="uil uil-lock-alt" style="font-size: 12px; opacity: 0.7;"></i>
+                </span>
+            `;
+        }
+    }
+
+    // Toggle Upload Card display for Admin
+    const uploadCard = document.getElementById("uploadCard");
+    if (uploadCard) {
+        uploadCard.style.display = isAdminLoggedIn() ? "block" : "none";
+    }
+
     if (filesArray.length === 0) {
         fileListContainer.innerHTML = `
             <div style="text-align: center; color: var(--text-color-second); padding: 30px 0;">
@@ -230,6 +261,19 @@ function renderFiles() {
         else if (['js','ts','py','java','c','cpp','html','css','json'].includes(ext)) iconClass = 'uil uil-brackets-curly';
         else if (['txt','md'].includes(ext))                                  iconClass = 'uil uil-document-layout-left';
 
+        // Admin extra action buttons (Edit, Delete)
+        let adminButtons = '';
+        if (isAdminLoggedIn()) {
+            adminButtons = `
+                <button class="action-btn edit-action" onclick="editFile('${file.id}')" title="Edit File Details" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid #f59e0b; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+                    <i class="uil uil-pen"></i> Edit
+                </button>
+                <button class="action-btn delete-action" onclick="deleteFile('${file.id}')" title="Delete File" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+                    <i class="uil uil-trash-alt"></i> Delete
+                </button>
+            `;
+        }
+
         item.innerHTML = `
             <div class="file-info">
                 <i class="${iconClass}"></i>
@@ -238,13 +282,14 @@ function renderFiles() {
                     <span class="file-meta">${file.size} • ${file.category || 'General'} • ${file.date}</span>
                 </div>
             </div>
-            <div class="file-actions" style="display: flex; gap: 8px;">
-                <button class="action-btn view-action" onclick="viewFile('${file.id}')" title="View / Open File" style="background: rgba(99, 102, 241, 0.15); color: var(--first-color); border: 1px solid var(--first-color); padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 5px;">
+            <div class="file-actions" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                <button class="action-btn view-action" onclick="viewFile('${file.id}')" title="View / Open File" style="background: rgba(99, 102, 241, 0.15); color: var(--first-color); border: 1px solid var(--first-color); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 4px;">
                     <i class="uil uil-eye"></i> View
                 </button>
                 <button class="action-btn download-action" onclick="downloadFile('${file.id}')" title="Download File">
                     <i class="uil uil-download-alt"></i> Download
                 </button>
+                ${adminButtons}
             </div>
         `;
         fileListContainer.appendChild(item);
@@ -264,6 +309,98 @@ window.viewFile = function (id) {
     } else {
         alert(`📄 ${file.name} (View Mode): ይህ ሰነድ በሳይቱ ላይ ዝግጁ ነው! ለማየት ወይም ለማውረድ Download አዝራሩን ይጠቀሙ።`);
     }
+};
+
+// Edit File Function (Admin Only)
+window.editFile = function (id) {
+    if (!isAdminLoggedIn()) {
+        alert("🔒 Access Denied! Only Yimen (Owner) can edit files.");
+        return;
+    }
+    const file = filesArray.find(f => f.id === id);
+    if (!file) return;
+
+    const newName = prompt("አዲሱን የፋይል ስም ያስገቡ (Edit File Name):", file.name);
+    if (newName === null) return; // Cancelled
+
+    const newCategory = prompt("አዲሱን ካቴጎሪ ያስገቡ (Edit Category/Description):", file.category || "General");
+    if (newCategory === null) return;
+
+    file.name = newName.trim() || file.name;
+    file.category = newCategory.trim() || file.category;
+
+    saveFiles();
+    renderFiles();
+    alert("✅ የፋይል መረጃው በተሳካ ሁኔታ ተሻሽሏል! (File details updated successfully)");
+};
+
+// Delete File Function (Admin Only)
+window.deleteFile = function (id) {
+    if (!isAdminLoggedIn()) {
+        alert("🔒 Access Denied! Only Yimen (Owner) can delete files.");
+        return;
+    }
+    const file = filesArray.find(f => f.id === id);
+    if (!file) return;
+
+    if (confirm(`የተመረጠውን ፋይል "${file.name}" ማስወገድ እርግጠኛ ነዎት?`)) {
+        filesArray = filesArray.filter(f => f.id !== id);
+        saveFiles();
+        renderFiles();
+        alert(`🗑️ "${file.name}" ተወግዷል!`);
+    }
+};
+
+// Admin Login Modal & Logic
+window.openAdminLoginModal = function () {
+    const pwd = prompt("🔐 የባለቤት (Owner Admin) ፓስወርድ ያስገቡ:\n(Default Password: 1234)");
+    if (pwd === null) return;
+    if (pwd.trim() === "1234" || pwd.trim() === "yimen27" || pwd.trim() === "yimen711") {
+        localStorage.setItem("admin_logged_in", "true");
+        alert("🎉 እንኳን ደህና መጡ Yimen! Admin Mode በርቷል። አሁን ፋይሎችን Upload, Edit, Delete ማድረግ ይችላሉ።");
+        renderFiles();
+    } else {
+        alert("❌ የገቡት ፓስወርድ ትክክል አይደለም! Access Denied.");
+    }
+};
+
+// Admin Logout
+window.adminLogout = function () {
+    localStorage.removeItem("admin_logged_in");
+    alert("🔒 ከAdmin Mode ወጥተዋል። አሁን ገጹ ወደ Visitor View (Read-Only) ተመልሷል።");
+    renderFiles();
+};
+
+// Process Uploaded Files (Admin Only)
+window.handleFilesUpload = function (files) {
+    if (!isAdminLoggedIn()) {
+        alert("🔒 Access Denied! Only Yimen can upload files.");
+        return;
+    }
+    const categoryInput = document.getElementById("fileCategory");
+    const category = categoryInput ? categoryInput.value.trim() : "Document";
+
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const newFile = {
+                id: Date.now().toString() + Math.random().toString(36).substr(2, 4),
+                name: file.name,
+                size: file.size < 1024 * 1024
+                    ? (file.size / 1024).toFixed(1) + ' KB'
+                    : (file.size / (1024 * 1024)).toFixed(2) + ' MB',
+                category: category || "Document",
+                date: new Date().toISOString().split('T')[0],
+                dataUrl: e.target.result
+            };
+            filesArray.unshift(newFile);
+            saveFiles();
+            renderFiles();
+            alert(`✅ "${file.name}" በተሳካ ሁኔታ ተጫነ! (Successfully uploaded)`);
+        };
+        reader.readAsDataURL(file);
+    });
+    if (categoryInput) categoryInput.value = '';
 };
 
 // Download File Function

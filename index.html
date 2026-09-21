@@ -269,24 +269,45 @@
                 </div>
             </section>
 
-            <!-- -------------- FILE MANAGER SECTION (READ-ONLY FOR VISITORS) ---------------- -->
+            <!-- -------------- FILE MANAGER SECTION (READ-ONLY FOR VISITORS / ADMIN FOR OWNER) ---------------- -->
             <section class="section" id="files">
                 <div class="top-header">
                     <h1>File Center & CV Hub</h1>
                     <span>View, preview, and download CV, documents, and materials.</span>
                 </div>
                 
-                <div class="file-manager-grid" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
+                <div class="file-manager-grid" style="display: flex; flex-direction: column; gap: 20px; max-width: 850px; margin: 0 auto;">
+                    <!-- Admin Only Upload Box (Hidden by default for visitors) -->
+                    <div class="file-card upload-card" id="uploadCard" style="display: none; border: 2px dashed #10b981; background: rgba(16, 185, 129, 0.03);">
+                        <div class="file-card-header" style="justify-content: space-between;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <i class="uil uil-cloud-upload" style="color: #10b981;"></i>
+                                <h3 style="color: #10b981;">Owner File Upload Panel</h3>
+                            </div>
+                            <span style="font-size: 12px; background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 4px 10px; border-radius: 10px; font-weight: 600;">👑 Admin Only</span>
+                        </div>
+                        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInputAdmin').click()" style="border: 2px dashed #10b981; border-radius: 14px; padding: 30px; text-align: center; background: rgba(16, 185, 129, 0.04); cursor: pointer;">
+                            <i class="uil uil-file-upload-alt" style="font-size: 38px; color: #10b981;"></i>
+                            <p style="margin-top: 8px;">Drag & Drop files here or <span style="color: #10b981; text-decoration: underline; font-weight: 600;">Browse</span></p>
+                            <small style="color: var(--text-color-second); display: block; margin-top: 6px;">📁 All file types accepted — PDF, Word, Image, Video, ZIP. Saved live to your site.</small>
+                            <input type="file" id="fileInputAdmin" accept="*/*" hidden multiple onchange="if(this.files.length) handleFilesUpload(this.files)">
+                        </div>
+                        <div class="upload-controls" style="display: flex; gap: 12px; margin-top: 15px;">
+                            <input type="text" id="fileCategory" class="input-field" placeholder="Description / Category (e.g. CV, Image, Project Doc)" style="flex: 1;">
+                            <button class="btn" style="background: #10b981; color: #fff;" onclick="const fi = document.getElementById('fileInputAdmin'); if(fi.files.length) handleFilesUpload(fi.files); else fi.click();"><i class="uil uil-upload"></i> Upload File</button>
+                        </div>
+                    </div>
+
                     <!-- File List / Download Box -->
                     <div class="file-card list-card">
-                        <div class="file-card-header" style="justify-content: space-between;">
+                        <div class="file-card-header" style="justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <i class="uil uil-folder-heart"></i>
                                 <h3>Available Files & Documents</h3>
                             </div>
-                            <span style="font-size: 13px; color: var(--text-color-second); font-weight: 500; background: rgba(99, 102, 241, 0.1); padding: 4px 12px; border-radius: 12px;">
-                                <i class="uil uil-eye"></i> View & Download Only
-                            </span>
+                            <div id="adminStatusBadge">
+                                <!-- Populated dynamically by JS -->
+                            </div>
                         </div>
                         <div class="file-list" id="fileList">
                             <!-- Populated dynamically via JS -->
