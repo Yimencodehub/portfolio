@@ -351,11 +351,13 @@ window.deleteFile = function (id) {
     }
 };
 
-// Admin Login Modal & Logic
+// Admin Login Modal & Logic (Constant Password Protected)
+const ADMIN_PASSWORD = "Yimenport1234";
+
 window.openAdminLoginModal = function () {
-    const pwd = prompt("🔐 የባለቤት (Owner Admin) ፓስወርድ ያስገቡ:\n(Default Password: 1234)");
+    const pwd = prompt("🔐 የባለቤት (Owner Admin) ፓስወርድ ያስገቡ:");
     if (pwd === null) return;
-    if (pwd.trim() === "1234" || pwd.trim() === "yimen27" || pwd.trim() === "yimen711") {
+    if (pwd.trim() === ADMIN_PASSWORD) {
         localStorage.setItem("admin_logged_in", "true");
         alert("🎉 እንኳን ደህና መጡ Yimen! Admin Mode በርቷል። አሁን ፋይሎችን Upload, Edit, Delete ማድረግ ይችላሉ።");
         renderFiles();
