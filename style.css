@@ -614,27 +614,147 @@ footer {
     color: var(--text-color-second);
 }
 
-/* ----- RESPONSIVE MEDIA QUERIES ----- */
+/* ===== RESPONSIVE MEDIA QUERIES ===== */
+
+/* Tablet — 1024px */
 @media only screen and (max-width: 1024px) {
-    .featured-box { flex-direction: column-reverse; justify-content: center; padding-top: 100px; }
-    .featured-text, .featured-image { width: 100%; text-align: center; }
+    nav { padding-inline: 5vw; }
+    .wrapper { padding-inline: 5vw; }
+
+    /* Hero */
+    .featured-box {
+        flex-direction: column-reverse;
+        justify-content: center;
+        padding-top: 110px;
+        padding-bottom: 40px;
+        gap: 30px;
+    }
+    .featured-text { width: 100%; text-align: center; }
+    .featured-image { width: 100%; justify-content: center; }
     .featured-text-btn, .social_icons { justify-content: center; }
-    .row, .file-manager-grid { grid-template-columns: 1fr; flex-direction: column; }
+    .featured-name { font-size: 36px; }
+
+    /* About */
+    .row { flex-direction: column; gap: 20px; }
+    .col { width: 100%; }
+
+    /* File manager */
+    .file-manager-grid { grid-template-columns: 1fr; gap: 20px; }
+
+    /* Projects */
+    .project-container { grid-template-columns: repeat(2, 1fr); }
+
+    /* Footer analytics */
+    footer { padding-inline: 5vw; }
 }
+
+/* Mobile — 768px */
 @media only screen and (max-width: 768px) {
+    /* Nav */
+    nav {
+        padding-inline: 4vw;
+        height: 70px;
+    }
     .nav-menu {
         position: fixed;
-        top: 80px;
+        top: 70px;
         left: -100%;
         flex-direction: column;
         background: var(--card-bg);
         width: 100%;
-        padding-block: 30px;
-        box-shadow: 0 10px 20px var(--first-shadow-color);
+        padding-block: 25px;
+        box-shadow: 0 10px 30px var(--first-shadow-color);
         transition: 0.3s ease;
+        z-index: 99;
+        gap: 5px;
     }
     .nav-menu.responsive { left: 0; }
     .nav-menu-btn { display: block; }
-    .form-inputs { flex-direction: column; }
+    .nav-button { display: none; }
+
+    /* Hero */
+    .featured-name { font-size: 30px; }
+    .featured-text-info { font-size: 14px; }
+    .image { width: 240px; height: 240px; }
+    .featured-text-btn { flex-wrap: wrap; gap: 10px; }
+    .featured-text-btn .btn { width: 100%; justify-content: center; }
+
+    /* Section spacing */
+    .section { padding-block: 4em 1.5em; }
+    .top-header h1 { font-size: 1.8em; }
+
+    /* About */
+    .about-info { padding: 20px; }
+    .skills-box { padding: 15px; }
+
+    /* Projects */
+    .project-container { grid-template-columns: 1fr; }
+    .project-card { padding: 20px 16px; }
+
+    /* Files */
     .file-manager-grid { grid-template-columns: 1fr; }
+    .file-card { padding: 20px; }
+    .drop-zone { padding: 25px 15px; }
+
+    /* Contact */
+    .form-inputs { flex-direction: column; gap: 12px; }
+    .contact-info h2 { font-size: 20px; }
+
+    /* Footer */
+    footer { padding: 30px 4vw 15px; }
+    .footer-menu { flex-wrap: wrap; gap: 12px; }
+    .footer-social-icons { gap: 10px; }
+
+    /* Analytics grid */
+    .footer-analytics > div:first-of-type {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Small Mobile — 480px */
+@media only screen and (max-width: 480px) {
+    nav { padding-inline: 4vw; height: 65px; }
+    .nav-logo .nav-name { font-size: 20px; }
+    .wrapper { padding-inline: 4vw; }
+
+    /* Hero */
+    .featured-name { font-size: 26px; }
+    .featured-text-card span { font-size: 12px; }
+    .image { width: 200px; height: 200px; }
+
+    /* Theme toggle + CV btn spacing */
+    .nav-actions { gap: 8px; }
+    .theme-toggle { width: 36px !important; height: 36px !important; }
+
+    /* Skills */
+    .skills-list span { font-size: 11px; padding: 4px 10px; }
+
+    /* Project cards */
+    .project-card h3 { font-size: 15px; }
+    .project-card p { font-size: 13px; }
+
+    /* Buttons */
+    .btn { padding: 10px 18px; font-size: 13px; }
+
+    /* Contact form */
+    .input-field, textarea { font-size: 13px; padding: 12px 14px; }
+    textarea { height: 100px; }
+
+    /* Section title */
+    .top-header h1 { font-size: 1.5em; }
+    .top-header span { font-size: 0.85em; }
+
+    /* Footer analytics */
+    .footer-analytics > div:first-of-type {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .footer-menu { gap: 8px; font-size: 13px; }
+}
+
+/* Very small screens — 360px */
+@media only screen and (max-width: 360px) {
+    .featured-name { font-size: 22px; }
+    .image { width: 170px; height: 170px; }
+    .featured-text-info { font-size: 13px; }
+    .top-header h1 { font-size: 1.3em; }
 }
