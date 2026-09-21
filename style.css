@@ -43,31 +43,28 @@ html, body, nav, .btn, .file-card, .about-info, .skills-box, .project-card, .for
     font-family: 'Poppins', sans-serif;
 }
 
-html{
+html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
-body{
+body {
     background: var(--body-color);
     color: var(--text-color);
     transition: background 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+    width: 100%;
 }
 
-::-webkit-scrollbar{
-    width: 8px;
-}
-::-webkit-scrollbar-track{
-    background: var(--body-color);
-}
-::-webkit-scrollbar-thumb{
-    background: var(--first-color);
-    border-radius: 10px;
-}
+::-webkit-scrollbar{ width: 8px; }
+::-webkit-scrollbar-track{ background: var(--body-color); }
+::-webkit-scrollbar-thumb{ background: var(--first-color); border-radius: 10px; }
 
 .container{
     width: 100%;
     position: relative;
     overflow-x: hidden;
+    max-width: 100vw;
 }
 
 /* ----- BUTTONS ----- */
@@ -107,11 +104,13 @@ nav{
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    max-width: 100vw;
     height: 80px;
     background: var(--body-color);
     padding-inline: 9vw;
     transition: all .3s ease;
     z-index: 100;
+    box-sizing: border-box;
 }
 .nav-logo{
     position: relative;
@@ -620,8 +619,6 @@ footer {
 @media only screen and (max-width: 1024px) {
     nav { padding-inline: 5vw; }
     .wrapper { padding-inline: 5vw; }
-
-    /* Hero */
     .featured-box {
         flex-direction: column-reverse;
         justify-content: center;
@@ -633,24 +630,15 @@ footer {
     .featured-image { width: 100%; justify-content: center; }
     .featured-text-btn, .social_icons { justify-content: center; }
     .featured-name { font-size: 36px; }
-
-    /* About */
     .row { flex-direction: column; gap: 20px; }
     .col { width: 100%; }
-
-    /* File manager */
     .file-manager-grid { grid-template-columns: 1fr; gap: 20px; }
-
-    /* Projects */
     .project-container { grid-template-columns: repeat(2, 1fr); }
-
-    /* Footer analytics */
     footer { padding-inline: 5vw; }
 }
 
-/* Mobile — 768px */
+/* ---- Mobile 768px ---- */
 @media only screen and (max-width: 768px) {
-    /* Nav */
     nav {
         padding-inline: 4vw;
         height: 70px;
@@ -659,102 +647,111 @@ footer {
         position: fixed;
         top: 70px;
         left: -100%;
+        width: 100%;
         flex-direction: column;
         background: var(--card-bg);
-        width: 100%;
-        padding-block: 25px;
+        padding: 20px 0;
         box-shadow: 0 10px 30px var(--first-shadow-color);
-        transition: 0.3s ease;
+        transition: left 0.3s ease;
         z-index: 99;
-        gap: 5px;
     }
+    .nav_menu_list {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        width: 100%;
+    }
+    .nav_menu_list li { width: 100%; text-align: center; }
+    .nav-link { display: block; padding: 12px 20px; }
     .nav-menu.responsive { left: 0; }
     .nav-menu-btn { display: block; }
     .nav-button { display: none; }
 
-    /* Hero */
-    .featured-name { font-size: 30px; }
+    .wrapper { padding-inline: 4vw; }
+    .featured-box { padding-top: 90px; }
+    .featured-name { font-size: 28px; }
     .featured-text-info { font-size: 14px; }
-    .image { width: 240px; height: 240px; }
-    .featured-text-btn { flex-wrap: wrap; gap: 10px; }
-    .featured-text-btn .btn { width: 100%; justify-content: center; }
+    .image { width: 220px; height: 220px; }
+    .featured-text-btn { flex-direction: column; gap: 10px; align-items: center; }
+    .featured-text-btn .btn { width: 90%; justify-content: center; }
 
-    /* Section spacing */
-    .section { padding-block: 4em 1.5em; }
+    .section { padding-block: 3.5em 1.5em; }
+    .top-header { margin-bottom: 2em; }
     .top-header h1 { font-size: 1.8em; }
 
-    /* About */
     .about-info { padding: 20px; }
-    .skills-box { padding: 15px; }
+    .skills-box { padding: 15px; margin-bottom: 12px; }
 
-    /* Projects */
-    .project-container { grid-template-columns: 1fr; }
-    .project-card { padding: 20px 16px; }
+    .project-container { grid-template-columns: 1fr; gap: 16px; }
+    .project-card { padding: 18px 14px; }
+    .project-card h3 { font-size: 16px; }
 
-    /* Files */
-    .file-manager-grid { grid-template-columns: 1fr; }
+    .file-manager-grid { grid-template-columns: 1fr; gap: 16px; }
     .file-card { padding: 20px; }
     .drop-zone { padding: 25px 15px; }
 
-    /* Contact */
-    .form-inputs { flex-direction: column; gap: 12px; }
+    .form-inputs { flex-direction: column; gap: 10px; }
     .contact-info h2 { font-size: 20px; }
+    .row { flex-direction: column; }
 
-    /* Footer */
-    footer { padding: 30px 4vw 15px; }
-    .footer-menu { flex-wrap: wrap; gap: 12px; }
+    footer { padding: 30px 4vw 20px; }
+    .footer-menu { flex-wrap: wrap; justify-content: center; gap: 10px; }
     .footer-social-icons { gap: 10px; }
-
-    /* Analytics grid */
-    .footer-analytics > div:first-of-type {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
 }
 
-/* Small Mobile — 480px */
+/* ---- Small Mobile 480px ---- */
 @media only screen and (max-width: 480px) {
-    nav { padding-inline: 4vw; height: 65px; }
-    .nav-logo .nav-name { font-size: 20px; }
-    .wrapper { padding-inline: 4vw; }
+    nav { padding-inline: 3vw; height: 62px; }
+    .nav-menu { top: 62px; }
+    .nav-logo .nav-name { font-size: 19px; }
+    .nav-actions { gap: 6px; }
 
-    /* Hero */
-    .featured-name { font-size: 26px; }
-    .featured-text-card span { font-size: 12px; }
-    .image { width: 200px; height: 200px; }
+    .wrapper { padding-inline: 3vw; }
+    .featured-name { font-size: 24px; }
+    .featured-text-card span { font-size: 12px; padding: 4px 10px; }
+    .image { width: 180px; height: 180px; }
+    .featured-text-info { font-size: 13px; }
 
-    /* Theme toggle + CV btn spacing */
-    .nav-actions { gap: 8px; }
-    .theme-toggle { width: 36px !important; height: 36px !important; }
-
-    /* Skills */
-    .skills-list span { font-size: 11px; padding: 4px 10px; }
-
-    /* Project cards */
-    .project-card h3 { font-size: 15px; }
-    .project-card p { font-size: 13px; }
-
-    /* Buttons */
-    .btn { padding: 10px 18px; font-size: 13px; }
-
-    /* Contact form */
-    .input-field, textarea { font-size: 13px; padding: 12px 14px; }
-    textarea { height: 100px; }
-
-    /* Section title */
+    .section { padding-block: 3em 1em; }
     .top-header h1 { font-size: 1.5em; }
-    .top-header span { font-size: 0.85em; }
+    .top-header span { font-size: 0.8em; }
 
-    /* Footer analytics */
-    .footer-analytics > div:first-of-type {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-    .footer-menu { gap: 8px; font-size: 13px; }
+    .about-info { padding: 16px; }
+    .about-info h3 { font-size: 18px; }
+    .skills-box { padding: 12px; }
+    .skills-list { gap: 6px; }
+    .skills-list span { font-size: 11px; padding: 4px 9px; }
+
+    .project-card { padding: 15px 12px; }
+    .project-card h3 { font-size: 14px; }
+    .project-card p { font-size: 12px; }
+
+    .file-card { padding: 16px; }
+    .file-card-header h3 { font-size: 16px; }
+    .drop-zone { padding: 20px 10px; }
+    .drop-zone i { font-size: 30px; }
+    .file-item { padding: 10px 12px; }
+    .file-name { font-size: 12px; }
+
+    .btn { padding: 10px 16px; font-size: 13px; }
+    .input-field, textarea { font-size: 13px; padding: 11px 13px; }
+    textarea { height: 90px; }
+
+    .form-control { padding: 20px 16px; }
+    .contact-info h2 { font-size: 18px; }
+
+    footer { padding: 25px 3vw 15px; }
+    .top-footer p { font-size: 18px; }
+    .footer-menu { gap: 8px; font-size: 12px; }
+    .footer-social-icons .icon { width: 36px; height: 36px; font-size: 16px; }
 }
 
-/* Very small screens — 360px */
+/* ---- Very Small 360px ---- */
 @media only screen and (max-width: 360px) {
-    .featured-name { font-size: 22px; }
-    .image { width: 170px; height: 170px; }
-    .featured-text-info { font-size: 13px; }
+    .featured-name { font-size: 20px; }
+    .image { width: 150px; height: 150px; }
+    .featured-text-info { font-size: 12px; }
     .top-header h1 { font-size: 1.3em; }
+    .btn { padding: 9px 14px; font-size: 12px; }
+    .nav-logo .nav-name { font-size: 17px; }
 }
