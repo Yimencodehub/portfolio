@@ -341,32 +341,8 @@ window.deleteFile = function (id) {
     }
 };
 
-// Profile Photo Upload Handler
+// Profile Photo Display
 const profileImgDisplay = document.getElementById('profileImgDisplay');
-const profileImgInput = document.getElementById('profileImgInput');
-const changeProfileBtn = document.getElementById('changeProfileBtn');
-
-// Load saved profile photo if available
-const savedProfilePic = localStorage.getItem('user_profile_photo');
-if (savedProfilePic && profileImgDisplay) {
-    profileImgDisplay.src = savedProfilePic;
-}
-
-if (changeProfileBtn && profileImgInput) {
-    changeProfileBtn.addEventListener('click', () => profileImgInput.click());
-    profileImgInput.addEventListener('change', (e) => {
-        if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                profileImgDisplay.src = evt.target.result;
-                try {
-                    localStorage.setItem('user_profile_photo', evt.target.result);
-                } catch(err) {}
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        }
-    });
-}
 
 // Download Default CV Function
 function downloadDefaultCV() {
